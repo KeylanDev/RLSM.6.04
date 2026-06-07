@@ -1,0 +1,41 @@
+<UserControl x:Class="rslm_frontend.Views.KeyloggerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource VsBackgroundBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
+            <Button Style="{StaticResource GreenButtonStyle}" Content="▶ Start"
+                    Command="{Binding StartCommand}" ToolTip="Start keylogger"/>
+            <Button Style="{StaticResource RedButtonStyle}" Content="⏹ Stop"
+                    Command="{Binding StopCommand}" ToolTip="Stop keylogger"/>
+            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
+            <Button Style="{StaticResource StandardButtonStyle}" Content="🗑 Clear"
+                    Command="{Binding ClearCommand}" ToolTip="Clear logs"/>
+            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Text="{Binding StatusText}"/>
+        </ToolBar>
+
+        <Border Grid.Row="1" BorderBrush="{StaticResource VsBorderBrush}" BorderThickness="1" Background="#FF1E1E1E">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <RichTextBox x:Name="LogTextBox" IsReadOnly="True"
+                             Background="#FF1E1E1E" Foreground="#4EC96C"
+                             FontFamily="Consolas" FontSize="12"
+                             Padding="8" BorderThickness="0"/>
+            </ScrollViewer>
+        </Border>
+
+        <StatusBar Grid.Row="2" Background="{StaticResource VsPanelBrush}">
+            <StatusBarItem>
+                <TextBlock Foreground="{StaticResource VsSecondaryTextBrush}"
+                           Text="{Binding TargetAgentId, StringFormat='Agent: {0}'}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>

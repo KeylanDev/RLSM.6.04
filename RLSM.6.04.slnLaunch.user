@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "RLSM.6.04\\RLSM.6.04.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "rslm_frontend\\rslm_frontend.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

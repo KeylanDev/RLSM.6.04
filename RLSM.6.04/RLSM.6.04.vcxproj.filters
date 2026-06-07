@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="RLSM.Common">
+      <UniqueIdentifier>{973e9a50-5241-411d-9b1c-8216040ed7d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Common\Enums">
+      <UniqueIdentifier>{ba0bc981-6ae7-4bcf-8833-4e5036b4480e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Common\Crypto">
+      <UniqueIdentifier>{c7b04ce4-c1e6-4c50-8449-0e9921ca2ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Common\Net">
+      <UniqueIdentifier>{8990e8a9-a68e-44ca-aa30-7ccae0cd6e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Common\Util">
+      <UniqueIdentifier>{78dabc77-8ab4-4478-a842-643eefa8c457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client">
+      <UniqueIdentifier>{ad0934b5-7353-4466-9dfa-bb46acdf0b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Config">
+      <UniqueIdentifier>{08d30637-0c56-4c4b-9c9d-30efc987d7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Extensions">
+      <UniqueIdentifier>{31025857-4e59-42c6-8571-e79328e33152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Helper">
+      <UniqueIdentifier>{5ee4dd1f-6c27-42d8-9225-e4b0f68ffd63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\IO">
+      <UniqueIdentifier>{678908ca-de0a-4847-961c-43d16abbda2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Messages">
+      <UniqueIdentifier>{ab94c1fd-c43d-4ae5-a5b3-701dde71713a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Networking">
+      <UniqueIdentifier>{b43bfc10-6993-4169-b7fa-799c31a6e3c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Recovery">
+      <UniqueIdentifier>{22514c62-8e9b-44dd-8b78-209608338eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\ReverseProxy">
+      <UniqueIdentifier>{c162258f-8a0d-4de6-b0b9-902403a21deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Setup">
+      <UniqueIdentifier>{706b13a4-2bdf-4792-bea0-b948296a5bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Server">
+      <UniqueIdentifier>{3b0bc773-f771-4d0b-bb15-52c00df4a92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Server\Build">
+      <UniqueIdentifier>{5f2dc09d-2e19-46bb-9e54-40b0f8275d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Server\Forms">
+      <UniqueIdentifier>{eec15f72-7710-4c6f-baa9-a8801ba7de54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Server\Messages">
+      <UniqueIdentifier>{323f8272-69f5-4659-9ceb-cefe348ca4ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Server\Networking">
+      <UniqueIdentifier>{63577f94-933c-448b-b544-ac973414610c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Common\Models">
+      <UniqueIdentifier>{a17664c1-f875-4e43-9770-57c759cb5122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Recovery\Browsers">
+      <UniqueIdentifier>{ef709799-775f-4693-81f3-36a854aa9dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RLSM.Client\Recovery\FtpClients">
+      <UniqueIdentifier>{93fe21ab-a598-4213-8d5f-634ea226392e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConnectionState.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="FileType.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessAction.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="StartupType.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseAction.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseProxyType.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="UserStatus.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentType.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="AES256.h">
+      <Filter>RLSM.Common\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="SHA256.h">
+      <Filter>RLSM.Common\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeComparison.h">
+      <Filter>RLSM.Common\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>RLSM.Common\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ShutdownAction.h">
+      <Filter>RLSM.Common\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferPool.h">
+      <Filter>RLSM.Common\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessInfo.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemInfo.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="StartupItem.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpConnection.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="RecoveredPassword.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="KeylogEntry.h">
+      <Filter>RLSM.Common\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>RLSM.Client\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonHelper.h">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemHelper.h">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenHelper.h">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeMethodsHelper.h">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimeHelper.h">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Shell.h">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareDevices.h">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="BatchFile.h">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="RSLMClient.h">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="TcpClient.h">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManagerHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteDesktopHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteShellHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyloggerHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordRecoveryHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="RegistryHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManagerHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemInformationHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ShutdownHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="StartupManagerHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpConnectionsHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseProxyHandler.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseProxyClient.h">
+      <Filter>RLSM.Client\ReverseProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientInstaller.h">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStartup.h">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientUninstaller.h">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="FirefoxPassReader.h">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgePassReader.h">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClInclude>
+    <ClInclude Include="WinScpPassReader.h">
+      <Filter>RLSM.Client\Recovery\FtpClients</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>RLSM.Server\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpServer.h">
+      <Filter>RLSM.Server\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="RSMLServer.h">
+      <Filter>RLSM.Server\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="UPnPService.h">
+      <Filter>RLSM.Server\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFileManager.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerRemoteDesktopHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerRemoteShellHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerKeyloggerHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPasswordRecoveryHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerRegistryHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerTaskManagerHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSystemInformationHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerStartupManagerHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerReverseProxyHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientBuilder.h">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ChromiumDecryptor.h">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClInclude>
+    <ClInclude Include="ChromePassReader.h">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClInclude>
+    <ClInclude Include="FileZillaPassReader.h">
+      <Filter>RLSM.Client\Recovery\FtpClients</Filter>
+    </ClInclude>
+    <ClInclude Include="RSLMServer.h">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFileManagerHandler.h">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentMessageDispatcher.h" />
+    <ClInclude Include="Base64Helper.h" />
+    <ClInclude Include="MessageFramer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="AES256.cpp">
+      <Filter>RLSM.Common\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="SHA256.cpp">
+      <Filter>RLSM.Common\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>RLSM.Common\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferPool.cpp">
+      <Filter>RLSM.Common\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimeHelper.cpp">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenHelper.cpp">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeMethodsHelper.cpp">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Shell.cpp">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareDevices.cpp">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="BatchFile.cpp">
+      <Filter>RLSM.Client\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpClient.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="RSLMClient.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="ReverdeProxyClient.cpp">
+      <Filter>RLSM.Client\ReverseProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientInstaller.cpp">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStartup.cpp">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientUninstaller.cpp">
+      <Filter>RLSM.Client\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="ChromiumDecryptor.cpp">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClCompile>
+    <ClCompile Include="FirefoxPassReader.cpp">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgePassReader.cpp">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClCompile>
+    <ClCompile Include="ChromePassReader.cpp">
+      <Filter>RLSM.Client\Recovery\Browsers</Filter>
+    </ClCompile>
+    <ClCompile Include="WinScpPassReader.cpp">
+      <Filter>RLSM.Client\Recovery\FtpClients</Filter>
+    </ClCompile>
+    <ClCompile Include="FileZillaPassReader.cpp">
+      <Filter>RLSM.Client\Recovery\FtpClients</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManagerHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteDesktopHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteShellHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyloggerHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="PasswordRecoveryHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistryHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskManagerHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemInformationHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ShutdownHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="StartupManagerHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemHelper.cpp">
+      <Filter>RLSM.Client\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpConnectionsHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ReverseProxyHandler.cpp">
+      <Filter>RLSM.Client\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpServer.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="RSLMServer.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="UPnPService.cpp">
+      <Filter>RLSM.Client\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientBuilder.cpp">
+      <Filter>RLSM.Server\Build</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerFileManagerHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerRemoteDesktopHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerRemoteShellHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerKeyloggerHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPasswordRecoveryHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerRegistryHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerTaskManagerHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSystemInformationHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerStartupManagerHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerReverseProxyHandler.cpp">
+      <Filter>RLSM.Server\Messages</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Keylan\\source\\repos\\RLSM.6.04\\rslm_frontend\\rslm_frontend.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Keylan\\source\\repos\\RLSM.6.04\\rslm_frontend\\rslm_frontend.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Keylan\\source\\repos\\RLSM.6.04\\rslm_frontend\\rslm_frontend.csproj",
+        "projectName": "rslm_frontend",
+        "projectPath": "C:\\Users\\Keylan\\source\\repos\\RLSM.6.04\\rslm_frontend\\rslm_frontend.csproj",
+        "packagesPath": "C:\\Users\\Keylan\\AppData\\Local\\Temp\\cursor-sandbox-cache\\eef96b5ca7290d310473074677bc8325\\nuget",
+        "outputPath": "C:\\Users\\Keylan\\source\\repos\\RLSM.6.04\\rslm_frontend\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Keylan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "targetAlias": "net48",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "dependencies": {
+            "AvalonEdit": {
+              "target": "Package",
+              "version": "[6.3.0.90, )"
+            },
+            "Dirkster.AvalonDock": {
+              "target": "Package",
+              "version": "[4.72.1, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

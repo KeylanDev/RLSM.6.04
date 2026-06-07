@@ -1,0 +1,41 @@
+
+<UserControl x:Class="rslm_frontend.Views.RemoteDesktopView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource VsPanelBrush}"
+             Focusable="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
+            <Button Style="{StaticResource GreenButtonStyle}" Content="▶ Start Stream" Command="{Binding StartCommand}"/>
+            <Button Style="{StaticResource RedButtonStyle}" Content="⏹ Stop Stream" Command="{Binding StopCommand}"/>
+            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
+            <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource VsSecondaryTextBrush}" Text="{Binding StatusText}"/>
+        </ToolBar>
+        
+        <Border Grid.Row="1" Background="Black" BorderBrush="#2D2D30" BorderThickness="1">
+            <Image x:Name="DesktopImage"
+                   Source="{Binding CurrentFrame}"
+                   Stretch="Uniform"
+                   MouseDown="OnMouseDown"
+                   MouseUp="OnMouseUp"
+                   MouseMove="OnMouseMove"
+                   MouseWheel="OnMouseWheel"
+                   MouseEnter="OnMouseEnter"
+                   KeyDown="OnKeyDown"
+                   KeyUp="OnKeyUp"
+                   Focusable="True"/>
+        </Border>
+        
+        <StatusBar Grid.Row="2" Style="{StaticResource VsStatusBarStyle}">
+            <StatusBarItem Style="{StaticResource VsStatusBarItemStyle}">
+                <TextBlock Text="{Binding TargetAgentId, StringFormat='Machine: {0}'}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>

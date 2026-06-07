@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+                    xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock">
+
+    <Style TargetType="{x:Type avalonDockControls:LayoutDocumentPaneControl}">
+        <Setter Property="Background" Value="{StaticResource VsBackgroundBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type avalonDockControls:LayoutAnchorablePaneControl}">
+        <Setter Property="Background" Value="{StaticResource VsPanelBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type avalonDockControls:LayoutGridResizerControl}">
+        <Setter Property="Background" Value="{StaticResource VsBorderBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type avalonDockControls:LayoutDocumentTabItem}">
+        <Setter Property="Height" Value="24" />
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="MaxHeight" Value="24" />
+        <Setter Property="Padding" Value="10,2,10,2" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="FontFamily" Value="{StaticResource VsUIFont}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{StaticResource VsSecondaryTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource VsInactiveTabBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource VsBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+    </Style>
+
+    <Style TargetType="{x:Type avalonDockControls:LayoutAnchorableTabItem}">
+        <Setter Property="Height" Value="24" />
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="MaxHeight" Value="24" />
+        <Setter Property="Padding" Value="8,2,8,2" />
+        <Setter Property="FontFamily" Value="{StaticResource VsUIFont}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{StaticResource VsSecondaryTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource VsInactiveTabBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource VsBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+    </Style>
+
+</ResourceDictionary>

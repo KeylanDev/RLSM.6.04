@@ -1,0 +1,40 @@
+<UserControl x:Class="rslm_frontend.Views.ReverseProxyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource VsBackgroundBrush}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
+            <Button Style="{StaticResource GreenButtonStyle}" Content="▶ Start"
+                    Command="{Binding StartCommand}" ToolTip="Start proxy"/>
+            <Button Style="{StaticResource RedButtonStyle}" Content="⏹ Stop"
+                    Command="{Binding StopCommand}" ToolTip="Stop proxy"/>
+            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Text="{Binding StatusText}"/>
+        </ToolBar>
+
+        <TextBlock Grid.Row="2" Text="Host" Foreground="{StaticResource VsSecondaryTextBrush}" Margin="0,16,0,4"/>
+        <TextBox Grid.Row="3" Text="{Binding Host, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#FF1E1E1E"
+                 Foreground="{StaticResource VsTextBrush}"
+                 BorderBrush="{StaticResource VsBorderBrush}"
+                 BorderThickness="1"
+                 Padding="4"/>
+
+        <TextBlock Grid.Row="4" Text="Port" Foreground="{StaticResource VsSecondaryTextBrush}" Margin="0,16,0,4"/>
+        <TextBox Grid.Row="5" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#FF1E1E1E"
+                 Foreground="{StaticResource VsTextBrush}"
+                 BorderBrush="{StaticResource VsBorderBrush}"
+                 BorderThickness="1"
+                 Padding="4"/>
+    </Grid>
+</UserControl>

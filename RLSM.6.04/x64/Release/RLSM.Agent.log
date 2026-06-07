@@ -1,0 +1,58 @@
+﻿  AgentMain.cpp
+  AgentMessageDispatcher.cpp
+  Client.cpp
+  ChromePassReader.cpp
+  EdgePassReader.cpp
+  FileManagerHandler.cpp
+  FileZillaPassReader.cpp
+  FirefoxPassReader.cpp
+  KeyloggerHandler.cpp
+  Message.cpp
+  NativeMethodsHelper.cpp
+  PasswordRecoveryHandler.cpp
+  RegistryHandler.cpp
+  RemoteDesktopHandler.cpp
+  RemoteShellHandler.cpp
+  ReverseProxyHandler.cpp
+  ScreenHelper.cpp
+  Shell.cpp
+  SystemHelper.cpp
+  SystemInformationHandler.cpp
+  Compiling...
+  TaskManagerHandler.cpp
+  TcpClient.cpp
+C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\TcpClient.cpp(22,31): warning C4099: 'rslm::client::networking::TcpClient::Impl': type name first seen using 'class' now seen using 'struct'
+      C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\TcpClient.h(25,11):
+      see declaration of 'rslm::client::networking::TcpClient::Impl'
+  
+  WinScpPassReader.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 3624 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+AgentMain.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'AgentMain.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+AgentMessageDispatcher.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'AgentMessageDispatcher.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+Client.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Client.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+ChromePassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'ChromePassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+EdgePassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'EdgePassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+FileManagerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FileManagerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+FileZillaPassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FileZillaPassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+FirefoxPassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FirefoxPassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+KeyloggerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'KeyloggerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+Message.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Message.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+NativeMethodsHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'NativeMethodsHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+PasswordRecoveryHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'PasswordRecoveryHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+RegistryHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'RegistryHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+RemoteDesktopHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'RemoteDesktopHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+RemoteShellHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'RemoteShellHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+ReverseProxyHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'ReverseProxyHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+ScreenHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'ScreenHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+Shell.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Shell.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+SystemHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'SystemHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+SystemInformationHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'SystemInformationHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+TaskManagerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'TaskManagerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+TcpClient.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'TcpClient.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+WinScpPassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'WinScpPassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+  RLSM.Agent.vcxproj -> C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\RLSM.Agent.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

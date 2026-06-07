@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:models="clr-namespace:rslm_frontend.Models">
+
+    <HierarchicalDataTemplate DataType="{x:Type models:ExplorerNode}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type models:ResourceNode}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>
