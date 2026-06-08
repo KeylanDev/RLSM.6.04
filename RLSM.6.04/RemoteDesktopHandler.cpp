@@ -1,10 +1,14 @@
 #include "RemoteDesktopHandler.h"
 #include "ScreenHelper.h"
 #include "MouseAction.h"
-#include <Windows.h>
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 #include <atomic>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 namespace rslm {
     namespace client {
@@ -16,62 +20,49 @@ namespace rslm {
             static int g_quality = 75;
             static int g_fps = 10;
 
-            static const std::vector<uint8_t> s_fallbackJpeg = {
-                0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01,
-                0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xFF, 0xDB, 0x00, 0x43,
-                0x00, 0x03, 0x02, 0x02, 0x03, 0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x04,
-                0x03, 0x03, 0x04, 0x05, 0x08, 0x05, 0x05, 0x04, 0x04, 0x05, 0x0A, 0x07,
-                0x07, 0x06, 0x08, 0x0C, 0x0A, 0x0C, 0x0C, 0x0B, 0x0A, 0x0B, 0x0B, 0x0D,
-                0x0E, 0x12, 0x10, 0x0D, 0x0E, 0x11, 0x0E, 0x0B, 0x0B, 0x10, 0x16, 0x10,
-                0x11, 0x13, 0x14, 0x15, 0x15, 0x15, 0x0C, 0x0F, 0x17, 0x18, 0x16, 0x14,
-                0x18, 0x12, 0x14, 0x15, 0x14, 0xFF, 0xC0, 0x00, 0x0B, 0x08, 0x00, 0x01,
-                0x00, 0x01, 0x01, 0x01, 0x11, 0x00, 0xFF, 0xC4, 0x00, 0x14, 0x00, 0x01,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x0A, 0xFF, 0xC4, 0x00, 0x14, 0x10, 0x01, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0xFF, 0xDA, 0x00, 0x08, 0x01, 0x01, 0x00, 0x00, 0x3F, 0x00, 0x37, 0xFF, 0xD9
-            };
-
-            void RemoteDesktopHandler::Start(int quality, int fps, FrameCallback onFrame)
-            {
+            void RemoteDesktopHandler::Start(int quality, int fps, FrameCallback onFrame) {
                 Stop();
-
                 g_quality = quality;
                 g_fps = fps > 0 ? fps : 10;
                 g_frameCallback = std::move(onFrame);
                 g_streaming = true;
 
                 g_streamThread = std::thread([]() {
+                    int width = 0, height = 0;
+                    helper::ScreenHelper::GetScreenSize(width, height);
+                    if (width <= 0)  width = 1920;
+                    if (height <= 0) height = 1080;
+
                     while (g_streaming) {
                         try {
-                            if (g_frameCallback) {
-                                g_frameCallback(s_fallbackJpeg, 1, 1);
-                            }
-                        } catch (...) {
+                            auto jpeg = helper::ScreenHelper::CaptureScreenJpeg(
+                                0, 0, width, height, g_quality);
 
+                            if (!jpeg.empty() && g_frameCallback) {
+                                g_frameCallback(jpeg, width, height);
+                            }
                         }
+                        catch (...) {}
 
                         auto delay = std::chrono::milliseconds(1000 / (g_fps > 0 ? g_fps : 10));
                         std::this_thread::sleep_for(delay);
                     }
-                });
+                    });
             }
 
-            void RemoteDesktopHandler::Stop()
-            {
+            void RemoteDesktopHandler::Stop() {
                 g_streaming = false;
-                if (g_streamThread.joinable())
+                if (g_streamThread.joinable()) {
                     g_streamThread.join();
+                }
                 g_frameCallback = nullptr;
             }
 
-            bool RemoteDesktopHandler::IsStreaming()
-            {
+            bool RemoteDesktopHandler::IsStreaming() {
                 return g_streaming;
             }
 
-            void RemoteDesktopHandler::SendMouseEvent(int x, int y, int action, int wheelDelta)
-            {
+            void RemoteDesktopHandler::SendMouseEvent(int x, int y, int action, int wheelDelta) {
 #ifdef _WIN32
                 SetCursorPos(x, y);
 
@@ -116,8 +107,7 @@ namespace rslm {
 #endif
             }
 
-            void RemoteDesktopHandler::SendKeyEvent(int keyCode, bool keyDown)
-            {
+            void RemoteDesktopHandler::SendKeyEvent(int keyCode, bool keyDown) {
 #ifdef _WIN32
                 INPUT input = {};
                 input.type = INPUT_KEYBOARD;

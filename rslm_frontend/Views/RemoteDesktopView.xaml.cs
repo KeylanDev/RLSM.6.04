@@ -21,13 +21,23 @@ namespace rslm_frontend.Views
 			Unloaded += RemoteDesktopView_Unloaded;
 		}
 
-		private void RemoteDesktopView_Loaded(object sender, RoutedEventArgs e)
-		{
-			// Focus the image so we can get keyboard events
-			DesktopImage.Focus();
-		}
+        private void RemoteDesktopView_Loaded(object sender, RoutedEventArgs e)
+        {
+            DesktopImage.Focus();
 
-		private void RemoteDesktopView_Unloaded(object sender, RoutedEventArgs e)
+            if (ViewModel != null)
+            {
+                ViewModel.FrameReceived += (bmp) =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        DesktopImage.Source = bmp;
+                    });
+                };
+            }
+        }
+
+        private void RemoteDesktopView_Unloaded(object sender, RoutedEventArgs e)
 		{
 			ViewModel?.Dispose();
 		}

@@ -11,10 +11,38 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\Computer_16x.png" />
+    <None Remove="Images\Console_16x.png" />
+    <None Remove="Images\Folder_16x.png" />
+    <None Remove="Images\Information_16x.png" />
+    <None Remove="Images\Keyboard_16x.png" />
+    <None Remove="Images\Monitor_16x.png" />
+    <None Remove="Images\Network_16x.png" />
+    <None Remove="Images\Password_16x.png" />
+    <None Remove="Images\Process_16x.png" />
+    <None Remove="Images\Settings_16x.png" />
+    <None Remove="Images\Start_16x.png" />
+    <None Remove="Images\Stop_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AvalonDock.Themes.VS2013" Version="2.0.0.5" />
     <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.72.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Computer_16x.png" />
+    <Resource Include="Images\Console_16x.png" />
+    <Resource Include="Images\Folder_16x.png" />
+    <Resource Include="Images\Information_16x.png" />
+    <Resource Include="Images\Keyboard_16x.png" />
+    <Resource Include="Images\Monitor_16x.png" />
+    <Resource Include="Images\Network_16x.png" />
+    <Resource Include="Images\Password_16x.png" />
+    <Resource Include="Images\Process_16x.png" />
+    <Resource Include="Images\Settings_16x.png" />
+    <Resource Include="Images\Start_16x.png" />
+    <Resource Include="Images\Stop_16x.png" />
   </ItemGroup>
 </Project>

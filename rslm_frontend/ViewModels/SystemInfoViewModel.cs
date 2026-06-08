@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json.Linq;
@@ -20,6 +20,8 @@ namespace rslm_frontend.ViewModels
         private long _availableRam;
         private string _gpu;
         private bool _isAdmin;
+        private string _ipAddress;
+        private string _macAddress;
         private string _statusText = "Ready";
         private string _targetAgentId;
         private bool _isBusy;
@@ -29,51 +31,23 @@ namespace rslm_frontend.ViewModels
             _tcpClient = tcpClient;
             _targetAgentId = targetAgentId ?? "";
             _log = log;
-
             RefreshCommand = new RelayCommand(_ => _ = RefreshAsync(), _ => _tcpClient.IsConnected && !IsBusy);
         }
 
-        public string ComputerName
-        {
-            get => _computerName;
-            set => SetProperty(ref _computerName, value);
-        }
-
-        public string Username
-        {
-            get => _username;
-            set => SetProperty(ref _username, value);
-        }
-
-        public string OsName
-        {
-            get => _osName;
-            set => SetProperty(ref _osName, value);
-        }
-
-        public string OsVersion
-        {
-            get => _osVersion;
-            set => SetProperty(ref _osVersion, value);
-        }
-
-        public string Architecture
-        {
-            get => _architecture;
-            set => SetProperty(ref _architecture, value);
-        }
-
-        public int CpuCores
-        {
-            get => _cpuCores;
-            set => SetProperty(ref _cpuCores, value);
-        }
-
-        public long TotalRam
-        {
-            get => _totalRam;
-            set => SetProperty(ref _totalRam, value);
-        }
+        public string ComputerName { get => _computerName; set => SetProperty(ref _computerName, value); }
+        public string Username { get => _username; set => SetProperty(ref _username, value); }
+        public string OsName { get => _osName; set => SetProperty(ref _osName, value); }
+        public string OsVersion { get => _osVersion; set => SetProperty(ref _osVersion, value); }
+        public string Architecture { get => _architecture; set => SetProperty(ref _architecture, value); }
+        public int CpuCores { get => _cpuCores; set => SetProperty(ref _cpuCores, value); }
+        public long TotalRam { get => _totalRam; set => SetProperty(ref _totalRam, value); }
+        public long AvailableRam { get => _availableRam; set => SetProperty(ref _availableRam, value); }
+        public string Gpu { get => _gpu; set => SetProperty(ref _gpu, value); }
+        public bool IsAdmin { get => _isAdmin; set => SetProperty(ref _isAdmin, value); }
+        public string IpAddress { get => _ipAddress; set => SetProperty(ref _ipAddress, value); }
+        public string MacAddress { get => _macAddress; set => SetProperty(ref _macAddress, value); }
+        public string StatusText { get => _statusText; set => SetProperty(ref _statusText, value); }
+        public string TargetAgentId { get => _targetAgentId; set => SetProperty(ref _targetAgentId, value); }
 
         public string TotalRamDisplay
         {
@@ -82,19 +56,9 @@ namespace rslm_frontend.ViewModels
                 string[] sizes = { "B", "KB", "MB", "GB", "TB" };
                 int order = 0;
                 double size = TotalRam;
-                while (size >= 1024 && order < sizes.Length - 1)
-                {
-                    order++;
-                    size /= 1024;
-                }
+                while (size >= 1024 && order < sizes.Length - 1) { order++; size /= 1024; }
                 return $"{size:0.##} {sizes[order]}";
             }
-        }
-
-        public long AvailableRam
-        {
-            get => _availableRam;
-            set => SetProperty(ref _availableRam, value);
         }
 
         public string AvailableRamDisplay
@@ -104,68 +68,22 @@ namespace rslm_frontend.ViewModels
                 string[] sizes = { "B", "KB", "MB", "GB", "TB" };
                 int order = 0;
                 double size = AvailableRam;
-                while (size >= 1024 && order < sizes.Length - 1)
-                {
-                    order++;
-                    size /= 1024;
-                }
+                while (size >= 1024 && order < sizes.Length - 1) { order++; size /= 1024; }
                 return $"{size:0.##} {sizes[order]}";
             }
         }
 
-        public string Gpu
-        {
-            get => _gpu;
-            set => SetProperty(ref _gpu, value);
-        }
-
-        public bool IsAdmin
-        {
-            get => _isAdmin;
-            set => SetProperty(ref _isAdmin, value);
-        }
-
-        public string StatusText
-        {
-            get => _statusText;
-            set => SetProperty(ref _statusText, value);
-        }
-
-        public string TargetAgentId
-        {
-            get => _targetAgentId;
-            set => SetProperty(ref _targetAgentId, value);
-        }
-
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                if (SetProperty(ref _isBusy, value))
-                {
-                    ((RelayCommand)RefreshCommand).RaiseCanExecuteChanged();
-                }
-            }
-        }
-
+        public bool IsBusy { get => _isBusy; set { if (SetProperty(ref _isBusy, value)) ((RelayCommand)RefreshCommand).RaiseCanExecuteChanged(); } }
         public ICommand RefreshCommand { get; }
 
         public async Task RefreshAsync()
         {
-            if (string.IsNullOrEmpty(_targetAgentId))
-            {
-                StatusText = "No agent selected";
-                return;
-            }
-
+            if (string.IsNullOrEmpty(_targetAgentId)) { StatusText = "No agent selected"; return; }
             IsBusy = true;
             StatusText = "Loading system info...";
-
             try
             {
                 var response = await _tcpClient.SendMessageAsync("system-info", _targetAgentId, new JObject());
-
                 if (response["payload"] != null)
                 {
                     ComputerName = response["payload"]["computerName"]?.ToString() ?? "";
@@ -178,32 +96,17 @@ namespace rslm_frontend.ViewModels
                     AvailableRam = response["payload"]["availableRam"]?.ToObject<long>() ?? 0;
                     Gpu = response["payload"]["gpu"]?.ToString() ?? "";
                     IsAdmin = response["payload"]["isAdmin"]?.ToObject<bool>() ?? false;
-
+                    IpAddress = response["payload"]["ipAddress"]?.ToString() ?? "";
+                    MacAddress = response["payload"]["macAddress"]?.ToString() ?? "";
                     OnPropertyChanged(nameof(TotalRamDisplay));
                     OnPropertyChanged(nameof(AvailableRamDisplay));
-
                     StatusText = "System info loaded";
-                    _log("System Info", "Loaded system information");
-                }
-                else
-                {
-                    StatusText = "Failed to load system info";
-                    _log("System Info", "Failed to load system info");
                 }
             }
-            catch (Exception ex)
-            {
-                StatusText = "Error: " + ex.Message;
-                _log("System Info", "Error: " + ex.Message);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            catch (Exception ex) { StatusText = "Error: " + ex.Message; }
+            finally { IsBusy = false; }
         }
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
     }
 }

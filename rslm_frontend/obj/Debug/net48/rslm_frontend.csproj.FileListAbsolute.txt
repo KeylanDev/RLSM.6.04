@@ -96,7 +96,6 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\KeyloggerV
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\PasswordRecoveryView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RegistryEditorView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteDesktopView.baml
-C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteDesktopWindow.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteShellView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\ReverseProxyView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\SystemInfoView.baml
@@ -107,7 +106,6 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\KeyloggerV
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\PasswordRecoveryView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RegistryEditorView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteDesktopView.g.cs
-C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteDesktopWindow.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\RemoteShellView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\ReverseProxyView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\Views\SystemInfoView.g.cs
@@ -124,6 +122,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.Pr
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.csproj.GenerateResource.cache
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.csproj.CoreCompileInputs.cache
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.sourcelink.json
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_fro.1BFB7D7F.Up2Date
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.exe
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Debug\net48\rslm_frontend.pdb

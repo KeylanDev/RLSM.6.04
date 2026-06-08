@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using rslm_frontend.Services;
 using rslm_frontend.ViewModels;
 using rslm_frontend.Views;
@@ -7,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Newtonsoft.Json.Linq;
 
 namespace rslm_frontend
 {
@@ -15,6 +15,7 @@ namespace rslm_frontend
     {
         private readonly RslmTcpClient _tcp;
         private string _selectedAgentId;
+        private Button _connectBtn; // référence gardée au runtime
 
         public MainWindow()
         {
@@ -42,9 +43,23 @@ namespace rslm_frontend
 
         private void AddAgent(string id, string tag)
         {
+            var headerPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            headerPanel.Children.Add(new TextBlock
+            {
+                Text = "\uE77B",
+                FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                Foreground = new SolidColorBrush(Color.FromRgb(0xD4, 0xD4, 0xD4)),
+                Margin = new Thickness(0, 0, 6, 0)
+            });
+            headerPanel.Children.Add(new TextBlock
+            {
+                Text = tag ?? id,
+                Foreground = new SolidColorBrush(Color.FromRgb(0xD4, 0xD4, 0xD4))
+            });
+
             var item = new TreeViewItem
             {
-                Header = $"💻 {tag ?? id}",
+                Header = headerPanel,
                 Tag = id
             };
             ExplorerTree.Items.Add(item);
@@ -53,19 +68,20 @@ namespace rslm_frontend
         private async void Connect_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
+            _connectBtn = btn; // on garde la référence pour Disconnect
             btn.IsEnabled = false;
-            btn.Content = "⏳ Connexion...";
+            SetButtonText(btn, "\uE768", "Connexion...", "White");
             Log("🔗 Connecting to 127.0.0.1:4782...");
 
             if (await _tcp.ConnectAsync())
             {
-                btn.Content = "✓ Connected";
+                SetButtonText(btn, "\uE768", "Connected", "White");
                 Log("✅ Connected to server!");
                 UpdateStatus("Connected");
             }
             else
             {
-                btn.Content = "▶ Connect";
+                SetButtonText(btn, "\uE768", "Connect", "White");
                 btn.IsEnabled = true;
                 Log("❌ Connection failed");
                 UpdateStatus("Disconnected");
@@ -75,12 +91,31 @@ namespace rslm_frontend
         private void Disconnect_Click(object sender, RoutedEventArgs e)
         {
             _tcp.Disconnect();
-            ConnectBtn.Content = "▶ Connect";
-            ConnectBtn.IsEnabled = true;
+
+            if (_connectBtn != null)
+            {
+                SetButtonText(_connectBtn, "\uE768", "Connect", "White");
+                _connectBtn.IsEnabled = true;
+            }
+
             ExplorerTree.Items.Clear();
             _selectedAgentId = null;
             Log("❌ Disconnected from server");
             UpdateStatus("Disconnected");
+        }
+
+        /// <summary>
+        /// Met à jour l'icône + le texte d'un bouton toolbar (StackPanel avec 2 TextBlocks).
+        /// </summary>
+        private void SetButtonText(Button btn, string icon, string text, string iconColor = "#D4D4D4")
+        {
+            if (btn?.Content is StackPanel sp && sp.Children.Count >= 2)
+            {
+                if (sp.Children[0] is TextBlock iconBlock)
+                    iconBlock.Text = icon;
+                if (sp.Children[1] is TextBlock textBlock)
+                    textBlock.Text = text;
+            }
         }
 
         private void OpenShell_Click(object sender, RoutedEventArgs e)
@@ -217,14 +252,14 @@ namespace rslm_frontend
 
             var rdView = new RemoteDesktopView();
             rdView.DataContext = new RemoteDesktopViewModel(_tcp, _selectedAgentId, (src, msg) => Log($"[{src}] {msg}"));
-
-            var popupWindow = new Views.RemoteDesktopWindow
+            var doc = new AvalonDock.Layout.LayoutDocument
             {
-                Title = $"Remote Desktop - {_selectedAgentId}",
-                ViewContent = { Content = rdView }
+                Title = $"Desktop - {_selectedAgentId}",
+                Content = rdView
             };
-            popupWindow.Show();
-            Log($"🖥 Remote Desktop popup opened for {_selectedAgentId}");
+            DocumentPane.Children.Add(doc);
+            doc.IsActive = true;
+            Log($"🖥 Remote Desktop opened for {_selectedAgentId}");
         }
 
         private void EnsureSelectedAgent()

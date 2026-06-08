@@ -15,6 +15,14 @@
             <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
             <Button Style="{StaticResource RedButtonStyle}" Content="❌ Kill Process"
                     Command="{Binding KillCommand}" ToolTip="Kill selected process"/>
+            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
+            <TextBlock Margin="8,0,4,0" VerticalAlignment="Center"
+                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Text="Search:"/>
+            <TextBox Width="200" Height="22" 
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     Background="#3E3E42" Foreground="#CCCCCC" 
+                     BorderBrush="#555555" BorderThickness="1" Padding="5,2"/>
             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
                        Foreground="{StaticResource VsSecondaryTextBrush}"
                        Text="{Binding StatusText}"/>

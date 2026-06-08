@@ -13,6 +13,12 @@ namespace rslm {
                 info.osVersion = helper::SystemHelper::GetOSVersion();
                 info.architecture = helper::SystemHelper::GetArchitecture();
                 info.isAdmin = helper::SystemHelper::IsAdmin();
+                info.cpuCores = helper::SystemHelper::GetCpuCores();
+                info.totalRam = helper::SystemHelper::GetTotalRam();
+                info.availableRam = helper::SystemHelper::GetAvailableRam();
+                info.gpu = helper::SystemHelper::GetGpuName();
+                info.ipAddress = helper::SystemHelper::GetIpAddress();
+                info.macAddress = helper::SystemHelper::GetMacAddress();
 
                 if (callback) callback(info);
             }

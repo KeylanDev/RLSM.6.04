@@ -49,26 +49,77 @@
 
             <!-- TOOLBAR -->
             <ToolBar Grid.Row="1" Background="#2D2D30" Padding="8,4">
-                <Button x:Name="ConnectBtn" Content="▶ Connect"
-                       Background="#7B2D8E" Foreground="White"
-                       Width="110" Height="28" Margin="4" Click="Connect_Click"
-                       Style="{StaticResource StandardButtonStyle}"/>
-                <Button x:Name="DisconnectBtn" Content="■ Disconnect"
-                       Background="Transparent" Foreground="#D4D4D4"
-                       Width="110" Height="28" Margin="4" Click="Disconnect_Click"
-                       Style="{StaticResource StandardButtonStyle}"/>
+                <Button x:Name="ConnectBtn" Click="Connect_Click" Background="#7B2D8E" Foreground="White"
+                       Width="110" Height="28" Margin="4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Start_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Connect"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="DisconnectBtn" Click="Disconnect_Click" Background="#3E3E42" Foreground="#D4D4D4"
+                       Width="110" Height="28" Margin="4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Stop_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Disconnect"/>
+                    </StackPanel>
+                </Button>
                 <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Content="⚡ Shell" Click="OpenShell_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="📁 Files" Click="OpenFileManager_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="🖥 Desktop" Click="OpenRemoteDesktop_Click" Style="{StaticResource StandardButtonStyle}"/>
+                <Button Click="OpenShell_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Console_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Shell"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenFileManager_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Folder_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Files"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenRemoteDesktop_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Monitor_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Desktop"/>
+                    </StackPanel>
+                </Button>
                 <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Content="⌨ Keylogger" Click="OpenKeylogger_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="🔑 Passwords" Click="OpenPasswordRecovery_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="📋 Registry" Click="OpenRegistryEditor_Click" Style="{StaticResource StandardButtonStyle}"/>
+                <Button Click="OpenKeylogger_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Keyboard_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Keylogger"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenPasswordRecovery_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Password_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Passwords"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenRegistryEditor_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Settings_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Registry"/>
+                    </StackPanel>
+                </Button>
                 <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Content="📊 Tasks" Click="OpenTaskManager_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="🔄 Proxy" Click="OpenReverseProxy_Click" Style="{StaticResource StandardButtonStyle}"/>
-                <Button Content="ℹ Info" Click="OpenSystemInfo_Click" Style="{StaticResource StandardButtonStyle}"/>
+                <Button Click="OpenTaskManager_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Process_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Tasks"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenReverseProxy_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Network_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Proxy"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenSystemInfo_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/Information_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="Info"/>
+                    </StackPanel>
+                </Button>
             </ToolBar>
 
             <!-- AVALONDOCK -->
@@ -78,8 +129,6 @@
                 </ad:DockingManager.Theme>
                 <adLayout:LayoutRoot>
                     <adLayout:LayoutPanel Orientation="Horizontal">
-
-                        <!-- EXPLORER (LEFT) -->
                         <adLayout:LayoutAnchorablePane DockWidth="240">
                             <adLayout:LayoutAnchorable Title="AGENTS" CanClose="False" CanHide="False">
                                 <TreeView x:Name="ExplorerTree" Background="#252526" Foreground="#D4D4D4"
@@ -87,13 +136,8 @@
                                           MouseDoubleClick="ExplorerTree_MouseDoubleClick"/>
                             </adLayout:LayoutAnchorable>
                         </adLayout:LayoutAnchorablePane>
-
-                        <!-- DOCUMENTS (CENTER) -->
                         <adLayout:LayoutDocumentPane x:Name="DocumentPane"/>
-
                     </adLayout:LayoutPanel>
-
-                    <!-- OUTPUT (BOTTOM) -->
                     <adLayout:LayoutRoot.BottomSide>
                         <adLayout:LayoutAnchorSide>
                             <adLayout:LayoutAnchorGroup>
@@ -105,11 +149,9 @@
                             </adLayout:LayoutAnchorGroup>
                         </adLayout:LayoutAnchorSide>
                     </adLayout:LayoutRoot.BottomSide>
-
                 </adLayout:LayoutRoot>
             </ad:DockingManager>
 
-            <!-- STATUSBAR -->
             <StatusBar x:Name="StatusBar1" Grid.Row="3" Background="#7B2D8E">
                 <StatusBarItem Foreground="White">● Prêt</StatusBarItem>
             </StatusBar>

