@@ -11,6 +11,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\Ada.png" />
     <None Remove="Images\Computer_16x.png" />
     <None Remove="Images\Console_16x.png" />
     <None Remove="Images\Folder_16x.png" />
@@ -32,6 +33,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Ada.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Computer_16x.png" />
     <Resource Include="Images\Console_16x.png" />
     <Resource Include="Images\Folder_16x.png" />

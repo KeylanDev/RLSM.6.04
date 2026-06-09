@@ -16,6 +16,16 @@ namespace rslm_frontend.Views
 
         private void KeyloggerView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (ViewModel != null)
+            {
+                // Pour TextBox, on utilise TextProperty
+                var binding = new System.Windows.Data.Binding("LogText")
+                {
+                    Mode = System.Windows.Data.BindingMode.OneWay,
+                    UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged
+                };
+                LogTextBox.SetBinding(TextBox.TextProperty, binding);
+            }
         }
 
         private void KeyloggerView_Unloaded(object sender, System.Windows.RoutedEventArgs e)

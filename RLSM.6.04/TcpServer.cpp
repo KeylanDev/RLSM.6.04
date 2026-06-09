@@ -15,6 +15,23 @@ namespace rslm {
     namespace server {
         namespace networking {
 
+            // Fonction utilitaire pour nettoyer les caractères non UTF-8
+            std::string sanitize(const std::string& input) {
+                std::string output;
+                for (unsigned char c : input) {
+                    if ((c >= 0x20 && c <= 0x7E) ||  // ASCII imprimable
+                        c == 0x09 || c == 0x0A || c == 0x0D ||  // tab, LF, CR
+                        (c >= 0xC2 && c <= 0xDF) ||  // UTF-8 2 bytes début
+                        (c >= 0xE0 && c <= 0xEF)) {  // UTF-8 3 bytes début
+                        output += c;
+                    }
+                    else {
+                        output += ' ';  // Remplacer les caractères invalides
+                    }
+                }
+                return output;
+            }
+
             struct ClientInfo {
                 std::string id;
                 int socket = -1;
@@ -85,26 +102,33 @@ namespace rslm {
                                         break;
                                     }
                                     buffer[bytes] = '\0';
-                                    std::string msg(buffer);
-                                    std::cout << "[TcpServer] Received from " << clientId << ": " << msg << "\n";
+
+                                    // Nettoyer le message reçu
+                                    std::string rawMsg(buffer, bytes);
+                                    std::string cleanMsg = sanitize(rawMsg);
+
+                                    std::cout << "[TcpServer] Received from " << clientId << ": " << cleanMsg << "\n";
 
                                     // === HELLO handshake ===
-                                    if (msg.find("\"hello\"") != std::string::npos) {
+                                    if (cleanMsg.find("\"hello\"") != std::string::npos) {
                                         std::string role = "agent";
-                                        if (msg.find("\"admin\"") != std::string::npos) role = "admin";
+                                        if (cleanMsg.find("\"admin\"") != std::string::npos) role = "admin";
 
                                         std::string ack = "{\"type\":\"hello_ack\",\"payload\":{\"clientId\":\"" +
                                             clientId + "\",\"role\":\"" + role + "\"}}\n";
-                                        send(clientSocket, ack.c_str(), ack.size(), 0);
+                                        // Nettoyer l'ack avant envoi
+                                        std::string cleanAck = sanitize(ack);
+                                        send(clientSocket, cleanAck.c_str(), cleanAck.size(), 0);
 
                                         // Si agent, notifier les admins
                                         if (role == "agent") {
                                             std::string notify = "{\"type\":\"agent-connected\",\"payload\":{\"id\":\"" +
                                                 clientId + "\",\"tag\":\"RSLM-Client\"}}\n";
+                                            std::string cleanNotify = sanitize(notify);
                                             std::lock_guard<std::mutex> lock(m_pImpl->clientsMutex);
                                             for (auto& other : m_pImpl->clients) {
                                                 if (other.socket != clientSocket) {
-                                                    send(other.socket, notify.c_str(), notify.size(), 0);
+                                                    send(other.socket, cleanNotify.c_str(), cleanNotify.size(), 0);
                                                 }
                                             }
                                         }
@@ -114,7 +138,7 @@ namespace rslm {
                                         std::lock_guard<std::mutex> lock(m_pImpl->clientsMutex);
                                         for (auto& other : m_pImpl->clients) {
                                             if (other.socket != clientSocket) {
-                                                send(other.socket, buffer, bytes, 0);
+                                                send(other.socket, cleanMsg.c_str(), cleanMsg.size(), 0);
                                             }
                                         }
                                     }

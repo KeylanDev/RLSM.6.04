@@ -1,7 +1,7 @@
 <UserControl x:Class="rslm_frontend.Views.KeyloggerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="{StaticResource VsBackgroundBrush}">
+             Background="{DynamicResource VsBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -9,31 +9,38 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
-            <Button Style="{StaticResource GreenButtonStyle}" Content="▶ Start"
+        <ToolBar Grid.Row="0" Style="{DynamicResource VsToolBarStyle}">
+            <Button Style="{DynamicResource GreenButtonStyle}" Content="▶ Start"
                     Command="{Binding StartCommand}" ToolTip="Start keylogger"/>
-            <Button Style="{StaticResource RedButtonStyle}" Content="⏹ Stop"
+            <Button Style="{DynamicResource RedButtonStyle}" Content="⏹ Stop"
                     Command="{Binding StopCommand}" ToolTip="Stop keylogger"/>
-            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-            <Button Style="{StaticResource StandardButtonStyle}" Content="🗑 Clear"
+            <Separator Style="{DynamicResource VsToolBarSeparatorStyle}"/>
+            <Button Style="{DynamicResource StandardButtonStyle}" Content="🗑 Clear"
                     Command="{Binding ClearCommand}" ToolTip="Clear logs"/>
             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Foreground="{DynamicResource VsSecondaryTextBrush}"
                        Text="{Binding StatusText}"/>
         </ToolBar>
 
-        <Border Grid.Row="1" BorderBrush="{StaticResource VsBorderBrush}" BorderThickness="1" Background="#FF1E1E1E">
+        <Border Grid.Row="1" BorderBrush="{DynamicResource VsBorderBrush}" BorderThickness="1" Background="{DynamicResource VsBackgroundBrush}">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <RichTextBox x:Name="LogTextBox" IsReadOnly="True"
-                             Background="#FF1E1E1E" Foreground="#4EC96C"
-                             FontFamily="Consolas" FontSize="12"
-                             Padding="8" BorderThickness="0"/>
+                <TextBox x:Name="LogTextBox" 
+                         IsReadOnly="True"
+                         Background="{DynamicResource VsBackgroundBrush}" 
+                         Foreground="{DynamicResource VsTextBrush}"
+                         FontFamily="Consolas" 
+                         FontSize="12"
+                         Padding="8" 
+                         BorderThickness="0"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Visible"/>
             </ScrollViewer>
         </Border>
 
-        <StatusBar Grid.Row="2" Background="{StaticResource VsPanelBrush}">
+        <StatusBar Grid.Row="2" Background="{DynamicResource VsPanelBrush}">
             <StatusBarItem>
-                <TextBlock Foreground="{StaticResource VsSecondaryTextBrush}"
+                <TextBlock Foreground="{DynamicResource VsSecondaryTextBrush}"
                            Text="{Binding TargetAgentId, StringFormat='Agent: {0}'}"/>
             </StatusBarItem>
         </StatusBar>

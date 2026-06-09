@@ -11,11 +11,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
-            <Button Style="{StaticResource GreenButtonStyle}" Content="▶ Open" Command="{Binding OpenShellCommand}" ToolTip="Open Remote Shell"/>
-            <Button Style="{StaticResource RedButtonStyle}" Content="■ Close" Command="{Binding CloseShellCommand}" ToolTip="Close Remote Shell"/>
-            <Button Style="{StaticResource StandardButtonStyle}" Content="Clear" Command="{Binding ClearCommand}" ToolTip="Clear Terminal Output"/>
-            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource VsSecondaryTextBrush}" Text="{Binding StatusText}"/>
+        <ToolBar Grid.Row="0" Style="{DynamicResource VsToolBarStyle}">
+            <Button Style="{DynamicResource GreenButtonStyle}" Content="▶ Open" Command="{Binding OpenShellCommand}" ToolTip="Open Remote Shell"/>
+            <Button Style="{DynamicResource RedButtonStyle}" Content="■ Close" Command="{Binding CloseShellCommand}" ToolTip="Close Remote Shell"/>
+            <Button Style="{DynamicResource StandardButtonStyle}" Content="Clear" Command="{Binding ClearCommand}" ToolTip="Clear Terminal Output"/>
+            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource VsSecondaryTextBrush}" Text="{Binding StatusText}"/>
         </ToolBar>
 
         <Border Grid.Row="1" BorderBrush="#FF2D2D30" BorderThickness="1" Background="#0C0C0D">
@@ -59,11 +59,11 @@
                      PreviewKeyDown="InputBox_PreviewKeyDown"/>
         </Grid>
 
-        <StatusBar Grid.Row="3" Background="{StaticResource VsPanelBrush}">
-            <StatusBarItem Style="{StaticResource VsStatusBarItemStyle}">
+        <StatusBar Grid.Row="3" Background="{DynamicResource VsPanelBrush}">
+            <StatusBarItem Style="{DynamicResource VsStatusBarItemStyle}">
                 <TextBlock Text="{Binding TargetAgentId, StringFormat='Machine: {0}'}"/>
             </StatusBarItem>
-            <StatusBarItem Style="{StaticResource VsStatusBarItemStyle}">
+            <StatusBarItem Style="{DynamicResource VsStatusBarItemStyle}">
                 <TextBlock Text="{Binding IsShellOpen, StringFormat='Shell: {0}'}"/>
             </StatusBarItem>
         </StatusBar>

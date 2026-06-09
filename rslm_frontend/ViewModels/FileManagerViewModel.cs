@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,6 +19,9 @@ namespace rslm_frontend.ViewModels
         private string _targetAgentId;
         private bool _isBusy;
 
+        // Événement pour ouvrir un fichier depuis la vue
+        public event Action<string> FileOpenRequested;
+
         public FileManagerViewModel(RslmTcpClient tcpClient, string targetAgentId, Action<string, string> log)
         {
             _tcpClient = tcpClient;
@@ -29,6 +32,7 @@ namespace rslm_frontend.ViewModels
             DeleteCommand = new RelayCommand(_ => _ = DeleteAsync(), _ => _tcpClient.IsConnected && !IsBusy && SelectedFile != null);
             DownloadCommand = new RelayCommand(_ => _ = DownloadAsync(), _ => _tcpClient.IsConnected && !IsBusy && SelectedFile != null && !SelectedFile.IsDirectory);
             ParentCommand = new RelayCommand(_ => NavigateToParent(), _ => _tcpClient.IsConnected && !IsBusy && !IsRootPath());
+            OpenFileCommand = new RelayCommand(_ => _ = OpenFileAsync(), _ => _tcpClient.IsConnected && !IsBusy && SelectedFile != null && !SelectedFile.IsDirectory);
         }
 
         public ObservableCollection<FileItem> Files => _files;
@@ -42,6 +46,7 @@ namespace rslm_frontend.ViewModels
                 {
                     ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged();
                     ((RelayCommand)DownloadCommand).RaiseCanExecuteChanged();
+                    ((RelayCommand)OpenFileCommand).RaiseCanExecuteChanged();
                 }
             }
         }
@@ -79,6 +84,7 @@ namespace rslm_frontend.ViewModels
                     ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged();
                     ((RelayCommand)DownloadCommand).RaiseCanExecuteChanged();
                     ((RelayCommand)ParentCommand).RaiseCanExecuteChanged();
+                    ((RelayCommand)OpenFileCommand).RaiseCanExecuteChanged();
                 }
             }
         }
@@ -87,6 +93,7 @@ namespace rslm_frontend.ViewModels
         public ICommand DeleteCommand { get; }
         public ICommand DownloadCommand { get; }
         public ICommand ParentCommand { get; }
+        public ICommand OpenFileCommand { get; }
 
         private bool IsRootPath()
         {
@@ -213,7 +220,10 @@ namespace rslm_frontend.ViewModels
                 {
                     var bytes = Convert.FromBase64String(base64);
                     var savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), SelectedFile.Name);
+
+                    // Correction pour .NET Framework : WriteAllBytes synchrone
                     File.WriteAllBytes(savePath, bytes);
+
                     StatusText = "Downloaded to " + savePath;
                     _log("File Manager", $"Downloaded to {savePath}");
                 }
@@ -232,6 +242,69 @@ namespace rslm_frontend.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        // MÉTHODE POUR TÉLÉCHARGER EN MÉMOIRE (pour le viewer)
+        public async Task<byte[]> DownloadFileDataAsync(string remotePath)
+        {
+            try
+            {
+                var payload = new JObject { ["path"] = remotePath };
+                var response = await _tcpClient.SendMessageAsync("file-download-request", _targetAgentId, payload);
+
+                var base64 = response["payload"]?["data"]?.ToString();
+                if (!string.IsNullOrEmpty(base64))
+                {
+                    return Convert.FromBase64String(base64);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log("File Manager", $"Download error: {ex.Message}");
+            }
+            return null;
+        }
+
+        // MÉTHODE POUR VÉRIFIER SI UN FICHIER EXISTE
+        public async Task<bool> CheckFileExistsAsync(string remotePath)
+        {
+            try
+            {
+                var payload = new JObject { ["path"] = remotePath };
+                var response = await _tcpClient.SendMessageAsync("file-info-request", _targetAgentId, payload);
+
+                if (response["payload"]?["exists"] != null)
+                {
+                    return response["payload"]["exists"].Value<bool>();
+                }
+            }
+            catch (Exception ex)
+            {
+                _log("File Manager", $"Check file error: {ex.Message}");
+            }
+            return false;
+        }
+
+        // MÉTHODE POUR OUVRIR UN FICHIER (déclenche l'événement)
+        private async Task OpenFileAsync()
+        {
+            if (SelectedFile == null || SelectedFile.IsDirectory) return;
+
+            bool exists = await CheckFileExistsAsync(SelectedFile.Path);
+            if (exists)
+            {
+                FileOpenRequested?.Invoke(SelectedFile.Path);
+            }
+            else
+            {
+                StatusText = "File not found";
+                _log("File Manager", $"File not found: {SelectedFile.Path}");
+            }
+        }
+
+        public void Log(string message)
+        {
+            _log("File Manager", message);
         }
 
         public void Dispose()

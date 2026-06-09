@@ -41,7 +41,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\Users\Keylan\Desktop\RLSM.6.04\sqlite3;C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -59,7 +59,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\Users\Keylan\Desktop\RLSM.6.04\sqlite3;C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,6 +89,7 @@
     <ClInclude Include="ScreenHelper.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Shell.h" />
+    <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SystemHelper.h" />
     <ClInclude Include="SystemInfo.h" />
     <ClInclude Include="SystemInformationHandler.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="ReverseProxyHandler.cpp" />
     <ClCompile Include="ScreenHelper.cpp" />
     <ClCompile Include="Shell.cpp" />
+    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SystemHelper.cpp" />
     <ClCompile Include="SystemInformationHandler.cpp" />
     <ClCompile Include="TaskManagerHandler.cpp" />

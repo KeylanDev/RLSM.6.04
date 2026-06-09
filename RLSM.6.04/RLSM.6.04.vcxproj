@@ -103,7 +103,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Quasar.Common\Enums;$(ProjectDir)Quasar.Common\Crypto;$(ProjectDir)Quasar.Common\Net;$(ProjectDir)Quasar.Common\Models;$(ProjectDir)Quasar.Common\Util;$(ProjectDir)Quasar.Client\Recovery\Browsers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Quasar.Common\Enums;$(ProjectDir)Quasar.Common\Crypto;$(ProjectDir)Quasar.Common\Net;$(ProjectDir)Quasar.Common\Models;$(ProjectDir)Quasar.Common\Util;$(ProjectDir)Quasar.Client\Recovery\Browsers;C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\;C:\Users\Keylan\Desktop\RLSM.6.04\sqlite3</AdditionalIncludeDirectories>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Quasar.Common\Enums;$(ProjectDir)Quasar.Common\Crypto;$(ProjectDir)Quasar.Common\Net;$(ProjectDir)Quasar.Common\Models;$(ProjectDir)Quasar.Common\Util;$(ProjectDir)Quasar.Client\Recovery\Browsers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Quasar.Common\Enums;$(ProjectDir)Quasar.Common\Crypto;$(ProjectDir)Quasar.Common\Net;$(ProjectDir)Quasar.Common\Models;$(ProjectDir)Quasar.Common\Util;$(ProjectDir)Quasar.Client\Recovery\Browsers;C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\;</AdditionalIncludeDirectories>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -192,6 +192,8 @@
     <ClInclude Include="Shell.h" />
     <ClInclude Include="ShutdownAction.h" />
     <ClInclude Include="ShutdownHandler.h" />
+    <ClInclude Include="sqlite3.h" />
+    <ClCompile Include="sqlite3.c" />
     <ClInclude Include="StartupItem.h" />
     <ClInclude Include="StartupManagerHandler.h" />
     <ClInclude Include="StartupType.h" />
@@ -251,6 +253,7 @@
     <ClCompile Include="SHA256.cpp" />
     <ClCompile Include="Shell.cpp" />
     <ClCompile Include="ShutdownHandler.cpp" />
+ 
     <ClCompile Include="StartupManagerHandler.cpp" />
     <ClCompile Include="SystemHelper.cpp" />
     <ClCompile Include="SystemInformationHandler.cpp" />

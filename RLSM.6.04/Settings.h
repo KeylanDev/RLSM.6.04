@@ -7,7 +7,7 @@ namespace rslm {
 		namespace config {
 
 			struct Settings {
-				std::string serverHost = "78.197.152.170";
+				std::string serverHost = "127.0.0.1";
 				uint16_t serverPort = 4782;
 				std::string serverPassword = "";
 

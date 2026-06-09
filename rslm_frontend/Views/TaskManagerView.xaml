@@ -1,7 +1,7 @@
 <UserControl x:Class="rslm_frontend.Views.TaskManagerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="{StaticResource VsBackgroundBrush}">
+             Background="{DynamicResource VsBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -9,22 +9,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ToolBar Grid.Row="0" Style="{StaticResource VsToolBarStyle}">
-            <Button Style="{StaticResource BlueButtonStyle}" Content="🔄 Refresh"
+        <ToolBar Grid.Row="0" Style="{DynamicResource VsToolBarStyle}">
+            <Button Style="{DynamicResource BlueButtonStyle}" Content="🔄 Refresh"
                     Command="{Binding RefreshCommand}" ToolTip="Refresh process list"/>
-            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-            <Button Style="{StaticResource RedButtonStyle}" Content="❌ Kill Process"
+            <Separator Style="{DynamicResource VsToolBarSeparatorStyle}"/>
+            <Button Style="{DynamicResource RedButtonStyle}" Content="❌ Kill Process"
                     Command="{Binding KillCommand}" ToolTip="Kill selected process"/>
-            <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
+            <Separator Style="{DynamicResource VsToolBarSeparatorStyle}"/>
             <TextBlock Margin="8,0,4,0" VerticalAlignment="Center"
-                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Foreground="{DynamicResource VsSecondaryTextBrush}"
                        Text="Search:"/>
             <TextBox Width="200" Height="22" 
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                      Background="#3E3E42" Foreground="#CCCCCC" 
                      BorderBrush="#555555" BorderThickness="1" Padding="5,2"/>
             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
-                       Foreground="{StaticResource VsSecondaryTextBrush}"
+                       Foreground="{DynamicResource VsSecondaryTextBrush}"
                        Text="{Binding StatusText}"/>
         </ToolBar>
 
@@ -32,8 +32,8 @@
                   ItemsSource="{Binding Tasks}"
                   SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                   Background="#FF1E1E1E"
-                  Foreground="{StaticResource VsTextBrush}"
-                  BorderBrush="{StaticResource VsBorderBrush}"
+                  Foreground="{DynamicResource VsTextBrush}"
+                  BorderBrush="{DynamicResource VsBorderBrush}"
                   BorderThickness="1">
             <ListView.View>
                 <GridView>
@@ -45,9 +45,9 @@
             </ListView.View>
         </ListView>
 
-        <StatusBar Grid.Row="2" Background="{StaticResource VsPanelBrush}">
+        <StatusBar Grid.Row="2" Background="{DynamicResource VsPanelBrush}">
             <StatusBarItem>
-                <TextBlock Foreground="{StaticResource VsSecondaryTextBrush}"
+                <TextBlock Foreground="{DynamicResource VsSecondaryTextBrush}"
                            Text="{Binding TargetAgentId, StringFormat='Agent: {0}'}"/>
             </StatusBarItem>
         </StatusBar>

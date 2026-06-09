@@ -91,7 +91,9 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\bin\Release\net48\zh-Hans\Xceed.
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend.csproj.AssemblyReference.cache
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\MainWindow.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\AvalonDockTheme.baml
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\VsDarkTheme.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileManagerView.baml
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileViewer.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\KeyloggerView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\PasswordRecoveryView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\RegistryEditorView.baml
@@ -102,6 +104,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\SystemIn
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\TaskManagerView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\MainWindow.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileManagerView.g.cs
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileViewer.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\KeyloggerView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\PasswordRecoveryView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\RegistryEditorView.g.cs
@@ -116,7 +119,6 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend_
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend_MarkupCompile.lref
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\App.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\DataTemplates.baml
-C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\VsDarkTheme.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend.g.resources
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend.Properties.Resources.resources
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend.csproj.GenerateResource.cache

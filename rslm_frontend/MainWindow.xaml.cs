@@ -15,11 +15,13 @@ namespace rslm_frontend
     {
         private readonly RslmTcpClient _tcp;
         private string _selectedAgentId;
-        private Button _connectBtn; // référence gardée au runtime
+        private Button _connectBtn;
 
         public MainWindow()
         {
             InitializeComponent();
+            ThemeManager.Initialize();
+            UpdateThemeButtons();
             _tcp = new RslmTcpClient("127.0.0.1", 4782);
 
             _tcp.AgentConnected += (id, tag) =>
@@ -39,6 +41,35 @@ namespace rslm_frontend
                     Log($"📩 Received: {msg.ToString(Newtonsoft.Json.Formatting.None)}");
                 });
             };
+        }
+
+        private void UpdateThemeButtons()
+        {
+            var current = ThemeManager.CurrentTheme;
+            DarkThemeBtn.IsChecked = (current == AppTheme.Dark);
+            LightThemeBtn.IsChecked = (current == AppTheme.Light);
+            SystemThemeBtn.IsChecked = (current == AppTheme.System);
+        }
+
+        private void ThemeButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as RadioButton;
+            if (btn == null) return;
+
+            switch (btn.Tag.ToString())
+            {
+                case "Dark":
+                    ThemeManager.SetTheme(AppTheme.Dark);
+                    break;
+                case "Light":
+                    ThemeManager.SetTheme(AppTheme.Light);
+                    break;
+                case "System":
+                    ThemeManager.SetTheme(AppTheme.System);
+                    break;
+            }
+
+            UpdateThemeButtons();
         }
 
         private void AddAgent(string id, string tag)
@@ -68,7 +99,7 @@ namespace rslm_frontend
         private async void Connect_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            _connectBtn = btn; // on garde la référence pour Disconnect
+            _connectBtn = btn;
             btn.IsEnabled = false;
             SetButtonText(btn, "\uE768", "Connexion...", "White");
             Log("🔗 Connecting to 127.0.0.1:4782...");
@@ -104,9 +135,6 @@ namespace rslm_frontend
             UpdateStatus("Disconnected");
         }
 
-        /// <summary>
-        /// Met à jour l'icône + le texte d'un bouton toolbar (StackPanel avec 2 TextBlocks).
-        /// </summary>
         private void SetButtonText(Button btn, string icon, string text, string iconColor = "#D4D4D4")
         {
             if (btn?.Content is StackPanel sp && sp.Children.Count >= 2)

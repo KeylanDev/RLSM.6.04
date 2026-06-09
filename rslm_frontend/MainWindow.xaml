@@ -4,22 +4,238 @@
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:adLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         xmlns:vs2013="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
-        Title="RSLM" Height="700" Width="1100"
+        Title="Ada by RSLM — Real-time Local Sensing Machine" Height="700" Width="1100"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="CanResize"
-        FontFamily="Segoe UI"
+        FontFamily="Consolas"
         FontSize="11">
 
-    <Border x:Name="WindowBorder" BorderThickness="1" CornerRadius="0" Background="#1E1E1E">
+    <Window.Resources>
+        <!-- Couleurs Visual Studio 2022 Dark / dnSpy -->
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="PanelBackgroundBrush" Color="#252526"/>
+        <SolidColorBrush x:Key="SelectionBrush" Color="#37373D"/>
+        <SolidColorBrush x:Key="ForegroundBrush" Color="#D4D4D4"/>
+        <SolidColorBrush x:Key="HoverBrush" Color="#2A2D2E"/>
+
+        <!-- Couleurs syntaxiques -->
+        <SolidColorBrush x:Key="KeywordBrush" Color="#569CD6"/>
+        <SolidColorBrush x:Key="StringBrush" Color="#6A9955"/>
+        <SolidColorBrush x:Key="TypeBrush" Color="#4EC9B0"/>
+        <SolidColorBrush x:Key="FunctionBrush" Color="#DCDCAA"/>
+        <SolidColorBrush x:Key="NumberBrush" Color="#B5CEA8"/>
+        <SolidColorBrush x:Key="CommentBrush" Color="#808080"/>
+        <SolidColorBrush x:Key="VariableBrush" Color="#9CDCFE"/>
+        <SolidColorBrush x:Key="ConstantBrush" Color="#CE9178"/>
+        <SolidColorBrush x:Key="AccentPurpleBrush" Color="#C586C0"/>
+
+        <!-- Bordures et scrollbar -->
+        <SolidColorBrush x:Key="BorderBrush" Color="#3F3F46"/>
+        <SolidColorBrush x:Key="WindowBorderBrush" Color="#C586C0"/>
+        <SolidColorBrush x:Key="ScrollbarBrush" Color="#424242"/>
+
+        <!-- Watermark logo brushes -->
+        <SolidColorBrush x:Key="WatermarkBrush" Color="#FFFFFF" Opacity="0.08"/>
+
+        <!-- Style des boutons -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentPurpleBrush}"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SelectionBrush}"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentPurpleBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style pour les boutons de la barre de titre -->
+        <Style TargetType="Button" x:Key="TitleBarButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="35"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SelectionBrush}"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentPurpleBrush}"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style pour les boutons de la toolbar -->
+        <Style TargetType="Button" x:Key="ToolbarButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SelectionBrush}"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentPurpleBrush}"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style pour le sélecteur de thème -->
+        <Style x:Key="ThemeSwitcherButton" TargetType="RadioButton">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="0"
+                                Padding="6,4">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource SelectionBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource AccentPurpleBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource HoverBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ThemeSwitcherContainer" TargetType="Border">
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource PanelBackgroundBrush}"/>
+        </Style>
+
+        <!-- Style pour les expanders type dnSpy -->
+        <Style TargetType="Expander">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <ToggleButton x:Name="headerToggleButton"
+                                          Grid.Row="0"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Cursor="Hand"
+                                          HorizontalAlignment="Stretch"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          Padding="4,6,4,6">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Grid Background="Transparent">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock x:Name="Arrow"
+                                                           Text="▶"
+                                                           Foreground="{DynamicResource ForegroundBrush}"
+                                                           FontSize="8"
+                                                           FontFamily="Segoe UI"
+                                                           Margin="0,0,8,0"
+                                                           VerticalAlignment="Center">
+                                                    <TextBlock.RenderTransform>
+                                                        <RotateTransform x:Name="ArrowRotation" Angle="0"/>
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
+                                                <ContentPresenter x:Name="HeaderContent"
+                                                                  Content="{Binding Header, RelativeSource={RelativeSource AncestorType=Expander}}"
+                                                                  TextElement.FontWeight="SemiBold"
+                                                                  TextElement.Foreground="{DynamicResource FunctionBrush}"
+                                                                  VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Arrow" Property="Text" Value="▼"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource HoverBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                                <ToggleButton.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=Expander}}" 
+                                                   Foreground="{DynamicResource FunctionBrush}"
+                                                   FontSize="11"
+                                                   FontWeight="Normal"/>
+                                    </StackPanel>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Grid.Row="1"
+                                              Content="{TemplateBinding Content}"
+                                              Margin="16,4,0,8"
+                                              Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="True">
+                                <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger SourceName="headerToggleButton" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="headerToggleButton" Property="Background" Value="{DynamicResource HoverBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Bordure principale - La bordure active utilise WindowBorderBrush -->
+    <Border x:Name="WindowBorder" BorderThickness="1" CornerRadius="0" Background="{DynamicResource BackgroundBrush}">
         <Border.Style>
             <Style TargetType="Border">
-                <Setter Property="BorderBrush" Value="#333333"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Value="True">
-                        <Setter Property="BorderBrush" Value="#7B2D8E"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -27,94 +243,126 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- TITLE BAR -->
-            <Grid Grid.Row="0" Background="#2D2D30" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                <TextBlock Text="  RSLM" Foreground="#7B2D8E" VerticalAlignment="Center"
-                          FontSize="13" FontWeight="SemiBold" Margin="8,0,0,0"/>
+            <Grid x:Name="TitleBar" Grid.Row="0" Background="{DynamicResource PanelBackgroundBrush}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0">
+                    <Image Source="Images/Ada.png" Width="32" Height="32" Margin="0,0,8,0"/>
+                    <TextBlock Text="Ada by RSLM" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center"
+                               FontSize="13" FontWeight="SemiBold"/>
+                </StackPanel>
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="─" Foreground="#AAAAAA" Background="Transparent" BorderThickness="0"
-                           Width="46" Height="30" Click="MinimizeButton_Click"/>
-                    <Button Content="□" Foreground="#AAAAAA" Background="Transparent" BorderThickness="0"
-                           Width="46" Height="30" Click="MaximizeButton_Click"/>
-                    <Button Content="✕" Foreground="#AAAAAA" Background="Transparent" BorderThickness="0"
-                           Width="46" Height="30" Click="CloseButton_Click"/>
+                    <!-- THEME SWITCHER -->
+                    <Border Style="{DynamicResource ThemeSwitcherContainer}" Margin="0,2,15,2" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton x:Name="DarkThemeBtn" 
+                                         Style="{DynamicResource ThemeSwitcherButton}"
+                                         GroupName="ThemeSwitcher"
+                                         ToolTip="Dark Mode"
+                                         Checked="ThemeButton_Checked"
+                                         Tag="Dark">
+                                <TextBlock Text="🌙" FontSize="14"/>
+                            </RadioButton>
+                            <RadioButton x:Name="SystemThemeBtn" 
+                                         Style="{DynamicResource ThemeSwitcherButton}"
+                                         GroupName="ThemeSwitcher"
+                                         ToolTip="System Mode"
+                                         Checked="ThemeButton_Checked"
+                                         Tag="System">
+                                <TextBlock Text="🌓" FontSize="14"/>
+                            </RadioButton>
+                            <RadioButton x:Name="LightThemeBtn" 
+                                         Style="{DynamicResource ThemeSwitcherButton}"
+                                         GroupName="ThemeSwitcher"
+                                         ToolTip="Light Mode"
+                                         Checked="ThemeButton_Checked"
+                                         Tag="Light">
+                                <TextBlock Text="☀" FontSize="14"/>
+                            </RadioButton>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Boutons de fermeture -->
+                    <Button Content="─" Style="{DynamicResource TitleBarButton}" Click="MinimizeButton_Click"/>
+                    <Button Content="□" Style="{DynamicResource TitleBarButton}" Click="MaximizeButton_Click"/>
+                    <Button Content="✕" Style="{DynamicResource TitleBarButton}" Click="CloseButton_Click"/>
                 </StackPanel>
             </Grid>
 
             <!-- TOOLBAR -->
-            <ToolBar Grid.Row="1" Background="#2D2D30" Padding="8,4">
-                <Button x:Name="ConnectBtn" Click="Connect_Click" Background="#7B2D8E" Foreground="White"
-                       Width="110" Height="28" Margin="4">
+            <ToolBar x:Name="ToolBar" Grid.Row="1" Background="{DynamicResource PanelBackgroundBrush}" Padding="8,4">
+                <Button x:Name="ConnectBtn" Click="Connect_Click" Background="{DynamicResource AccentPurpleBrush}" Foreground="White"
+                       Width="110" Height="28" Margin="4" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Start_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Connect"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="DisconnectBtn" Click="Disconnect_Click" Background="#3E3E42" Foreground="#D4D4D4"
-                       Width="110" Height="28" Margin="4">
+                <Button x:Name="DisconnectBtn" Click="Disconnect_Click" Background="{DynamicResource SelectionBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                       Width="110" Height="28" Margin="4" BorderThickness="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Stop_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Disconnect"/>
                     </StackPanel>
                 </Button>
-                <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Click="OpenShell_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Separator Style="{DynamicResource VsToolBarSeparatorStyle}"/>
+                <Button Click="OpenShell_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Console_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Shell"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenFileManager_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenFileManager_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Folder_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Files"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenRemoteDesktop_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenRemoteDesktop_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Monitor_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Desktop"/>
                     </StackPanel>
                 </Button>
                 <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Click="OpenKeylogger_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenKeylogger_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Keyboard_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Keylogger"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenPasswordRecovery_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenPasswordRecovery_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Password_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Passwords"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenRegistryEditor_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenRegistryEditor_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Settings_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Registry"/>
                     </StackPanel>
                 </Button>
                 <Separator Style="{StaticResource VsToolBarSeparatorStyle}"/>
-                <Button Click="OpenTaskManager_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenTaskManager_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Process_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Tasks"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenReverseProxy_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenReverseProxy_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Network_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Proxy"/>
                     </StackPanel>
                 </Button>
-                <Button Click="OpenSystemInfo_Click" Background="Transparent" Foreground="#D4D4D4" Height="28" Padding="8,4">
+                <Button Click="OpenSystemInfo_Click" Style="{DynamicResource ToolbarButton}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Images/Information_16x.png" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="Info"/>
@@ -123,26 +371,41 @@
             </ToolBar>
 
             <!-- AVALONDOCK -->
-            <ad:DockingManager x:Name="DockManager" Grid.Row="2" Background="#1E1E1E">
+            <ad:DockingManager x:Name="DockManager" Grid.Row="2" Background="{DynamicResource BackgroundBrush}">
                 <ad:DockingManager.Theme>
                     <vs2013:Vs2013DarkTheme/>
                 </ad:DockingManager.Theme>
                 <adLayout:LayoutRoot>
                     <adLayout:LayoutPanel Orientation="Horizontal">
+
+                        <!-- AGENTS PANEL WITH WATERMARK LOGO -->
                         <adLayout:LayoutAnchorablePane DockWidth="240">
                             <adLayout:LayoutAnchorable Title="AGENTS" CanClose="False" CanHide="False">
-                                <TreeView x:Name="ExplorerTree" Background="#252526" Foreground="#D4D4D4"
-                                          BorderThickness="0" Margin="4"
-                                          MouseDoubleClick="ExplorerTree_MouseDoubleClick"/>
+                                <Grid>
+                                    <TreeView x:Name="ExplorerTree" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                              BorderThickness="0" Margin="4"
+                                              MouseDoubleClick="ExplorerTree_MouseDoubleClick"/>
+
+                                    <Image Source="Images/Ada.png" 
+                                           Width="180" 
+                                           Height="Auto"
+                                           Opacity="0.08"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Bottom"
+                                           Margin="0,0,15,15"
+                                           IsHitTestVisible="False"
+                                           Stretch="Uniform"/>
+                                </Grid>
                             </adLayout:LayoutAnchorable>
                         </adLayout:LayoutAnchorablePane>
+
                         <adLayout:LayoutDocumentPane x:Name="DocumentPane"/>
                     </adLayout:LayoutPanel>
                     <adLayout:LayoutRoot.BottomSide>
                         <adLayout:LayoutAnchorSide>
                             <adLayout:LayoutAnchorGroup>
                                 <adLayout:LayoutAnchorable Title="Output" CanClose="False" CanHide="False">
-                                    <RichTextBox x:Name="OutputBox" Background="#0C0C0D" Foreground="#4EC96C"
+                                    <RichTextBox x:Name="OutputBox" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}" 
                                                  FontFamily="Consolas" FontSize="12" BorderThickness="0"
                                                  IsReadOnly="True" VerticalScrollBarVisibility="Auto" Padding="8"/>
                                 </adLayout:LayoutAnchorable>
@@ -152,8 +415,11 @@
                 </adLayout:LayoutRoot>
             </ad:DockingManager>
 
-            <StatusBar x:Name="StatusBar1" Grid.Row="3" Background="#7B2D8E">
-                <StatusBarItem Foreground="White">● Prêt</StatusBarItem>
+            <!-- STATUS BAR -->
+            <StatusBar x:Name="StatusBar1" Grid.Row="3" Background="{DynamicResource AccentPurpleBrush}">
+                <StatusBarItem Foreground="White" FontFamily="Consolas">
+                    <TextBlock Text="● ready │ waiting for connection" />
+                </StatusBarItem>
             </StatusBar>
         </Grid>
     </Border>

@@ -108,7 +108,7 @@ namespace rslm {
             }
 
             std::vector<uint8_t> ScreenHelper::CaptureScreenBmp(int x, int y, int width, int height) {
-                // Non implémenté pour l'instant
+                // Non implï¿½mentï¿½ pour l'instant
                 return {};
             }
 

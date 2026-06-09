@@ -289,6 +289,7 @@
     <ClInclude Include="AgentMessageDispatcher.h" />
     <ClInclude Include="Base64Helper.h" />
     <ClInclude Include="MessageFramer.h" />
+    <ClInclude Include="sqlite3\sqlite3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -445,5 +446,6 @@
     <ClCompile Include="ServerReverseProxyHandler.cpp">
       <Filter>RLSM.Server\Messages</Filter>
     </ClCompile>
+    <ClCompile Include="sqlite3\sqlite3.c" />
   </ItemGroup>
 </Project>

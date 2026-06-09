@@ -2,6 +2,7 @@
   AgentMessageDispatcher.cpp
   Client.cpp
   ChromePassReader.cpp
+C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\ChromePassReader.cpp(26,51): warning C4267: '=': conversion from 'size_t' to 'DWORD', possible loss of data
   EdgePassReader.cpp
   FileManagerHandler.cpp
   FileZillaPassReader.cpp
@@ -28,6 +29,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\TcpClient.cpp(22,31): warning C4099:
   
   WinScpPassReader.cpp
   Generating Code...
+  sqlite3.c
 AgentMain.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'AgentMain.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 AgentMessageDispatcher.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'AgentMessageDispatcher.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 Client.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Client.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
@@ -46,6 +48,7 @@ RemoteShellHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Re
 ReverseProxyHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'ReverseProxyHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 ScreenHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'ScreenHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 Shell.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Shell.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
+sqlite3.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'sqlite3.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 SystemHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'SystemHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 SystemInformationHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'SystemInformationHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
 TaskManagerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'TaskManagerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Debug\vc143.pdb'; linking object as if no debug info
