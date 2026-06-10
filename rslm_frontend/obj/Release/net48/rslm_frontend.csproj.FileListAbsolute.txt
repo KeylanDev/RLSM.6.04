@@ -92,6 +92,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\rslm_frontend.
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\MainWindow.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\AvalonDockTheme.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Styles\VsDarkTheme.baml
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\BuilderTerminalView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileManagerView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileViewer.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\KeyloggerView.baml
@@ -103,6 +104,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\ReverseP
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\SystemInfoView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\TaskManagerView.baml
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\MainWindow.g.cs
+C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\BuilderTerminalView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileManagerView.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\FileViewer.g.cs
 C:\Users\Keylan\Desktop\RLSM.6.04\rslm_frontend\obj\Release\net48\Views\KeyloggerView.g.cs

@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RLSM.Agent", "RLSM.6.04\RLS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rslm_frontend", "rslm_frontend\rslm_frontend.csproj", "{04316D10-2B9F-4089-93D3-9A3373678D98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSLM.Builder", "RSLM.Builder\RSLM.Builder.csproj", "{BD56C5C7-C1D5-4216-9632-885F958352C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{04316D10-2B9F-4089-93D3-9A3373678D98}.Release|x64.Build.0 = Release|Any CPU
 		{04316D10-2B9F-4089-93D3-9A3373678D98}.Release|x86.ActiveCfg = Release|Any CPU
 		{04316D10-2B9F-4089-93D3-9A3373678D98}.Release|x86.Build.0 = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|x64.Build.0 = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|x64.Build.0 = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD56C5C7-C1D5-4216-9632-885F958352C6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

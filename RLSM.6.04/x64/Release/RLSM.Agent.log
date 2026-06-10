@@ -8,6 +8,7 @@ C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\ChromePassReader.cpp(26,51): warning
   FileManagerHandler.cpp
   FileZillaPassReader.cpp
   FirefoxPassReader.cpp
+  Globals.cpp
   KeyloggerHandler.cpp
   Message.cpp
   NativeMethodsHelper.cpp
@@ -19,8 +20,8 @@ C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\ChromePassReader.cpp(26,51): warning
   ScreenHelper.cpp
   Shell.cpp
   SystemHelper.cpp
-  SystemInformationHandler.cpp
   Compiling...
+  SystemInformationHandler.cpp
   TaskManagerHandler.cpp
   TcpClient.cpp
 C:\Users\Keylan\Desktop\RLSM.6.04\RLSM.6.04\TcpClient.cpp(22,31): warning C4099: 'rslm::client::networking::TcpClient::Impl': type name first seen using 'class' now seen using 'struct'
@@ -41,6 +42,7 @@ EdgePassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'EdgePa
 FileManagerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FileManagerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
 FileZillaPassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FileZillaPassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
 FirefoxPassReader.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FirefoxPassReader.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
+Globals.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Globals.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
 KeyloggerHandler.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'KeyloggerHandler.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
 Message.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Message.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info
 NativeMethodsHelper.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'NativeMethodsHelper.obj' or at 'C:\Users\Keylan\Desktop\RLSM.6.04\x64\Release\vc143.pdb'; linking object as if no debug info

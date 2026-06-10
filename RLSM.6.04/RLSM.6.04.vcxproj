@@ -152,6 +152,7 @@
     <ClInclude Include="FileType.h" />
     <ClInclude Include="FileZillaPassReader.h" />
     <ClInclude Include="FirefoxPassReader.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="HardwareDevices.h" />
     <ClInclude Include="JsonHelper.h" />
     <ClInclude Include="KeylogEntry.h" />
@@ -193,10 +194,12 @@
     <ClInclude Include="ShutdownAction.h" />
     <ClInclude Include="ShutdownHandler.h" />
     <ClInclude Include="sqlite3.h" />
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClInclude Include="StartupItem.h" />
     <ClInclude Include="StartupManagerHandler.h" />
     <ClInclude Include="StartupType.h" />
+    <ClInclude Include="Strings.h" />
     <ClInclude Include="SystemHelper.h" />
     <ClInclude Include="SystemInfo.h" />
     <ClInclude Include="SystemInformationHandler.h" />
@@ -253,7 +256,6 @@
     <ClCompile Include="SHA256.cpp" />
     <ClCompile Include="Shell.cpp" />
     <ClCompile Include="ShutdownHandler.cpp" />
- 
     <ClCompile Include="StartupManagerHandler.cpp" />
     <ClCompile Include="SystemHelper.cpp" />
     <ClCompile Include="SystemInformationHandler.cpp" />

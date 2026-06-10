@@ -339,5 +339,20 @@ namespace rslm_frontend
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+
+        // ============================================================
+        // NOUVEAU : Ouvre le terminal Builder
+        // ============================================================
+        private void OpenBuilderTerminal_Click(object sender, RoutedEventArgs e)
+        {
+            var view = new BuilderTerminalView();
+            var doc = new AvalonDock.Layout.LayoutDocument
+            {
+                Title = "Builder Terminal",
+                Content = view
+            };
+            DocumentPane.Children.Add(doc);
+            doc.IsActive = true;
+        }
     }
 }

