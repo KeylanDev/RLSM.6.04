@@ -1,5 +1,0 @@
-cd C:\Users\Keylan\Desktop\RLSM.6.04\RSLM.Builder\bin\Release
-copy /b cat.jpg + update.dat img.jpg
-cd go
-go build -ldflags="-H windowsgui -s -w" -o stub.exe downloader.go
-cd ..

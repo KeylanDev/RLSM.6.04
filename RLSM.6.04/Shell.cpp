@@ -93,8 +93,9 @@ namespace rslm {
                 CloseHandle(hWritePipe);
                 CloseHandle(hReadIn);
 
+                // Thread de lecture avec buffer agrandi et envoi par morceaux
                 std::thread([data]() {
-                    char buffer[4096];
+                    char buffer[65536];  // Buffer agrandi à 64KB
                     while (data->alive) {
                         DWORD bytesRead = 0;
                         BOOL ok = ReadFile(data->hStdOut, buffer, sizeof(buffer) - 1, &bytesRead, nullptr);
@@ -112,14 +113,23 @@ namespace rslm {
                         }
 
                         buffer[bytesRead] = '\0';
-                        if (data->onOutput)
-                            data->onOutput(std::string(buffer, bytesRead));
+                        if (data->onOutput) {
+                            // Envoyer par petits morceaux pour éviter les timeouts
+                            std::string output(buffer, bytesRead);
+                            size_t pos = 0;
+                            while (pos < output.size()) {
+                                size_t chunk = std::min<size_t>(4096, output.size() - pos);
+                                data->onOutput(output.substr(pos, chunk));
+                                pos += chunk;
+                                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                            }
+                        }
                     }
 
                     data->alive = false;
                     if (data->onClose)
                         data->onClose();
-                }).detach();
+                    }).detach();
 
                 return data;
             }
@@ -244,20 +254,28 @@ namespace rslm {
                 data->alive = true;
 
                 std::thread([data]() {
-                    char buffer[4096];
+                    char buffer[65536];
                     while (data->alive) {
                         ssize_t bytesRead = read(data->stdoutRead, buffer, sizeof(buffer) - 1);
                         if (bytesRead <= 0) break;
 
                         buffer[bytesRead] = '\0';
-                        if (data->onOutput)
-                            data->onOutput(std::string(buffer, bytesRead));
+                        if (data->onOutput) {
+                            std::string output(buffer, bytesRead);
+                            size_t pos = 0;
+                            while (pos < output.size()) {
+                                size_t chunk = std::min<size_t>(4096, output.size() - pos);
+                                data->onOutput(output.substr(pos, chunk));
+                                pos += chunk;
+                                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                            }
+                        }
                     }
 
                     data->alive = false;
                     if (data->onClose)
                         data->onClose();
-                }).detach();
+                    }).detach();
 
                 return data;
             }

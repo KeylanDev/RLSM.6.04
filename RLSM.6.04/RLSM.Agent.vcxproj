@@ -86,6 +86,7 @@
     <ClInclude Include="MouseAction.h" />
     <ClInclude Include="NativeMethodsHelper.h" />
     <ClInclude Include="PasswordRecoveryHandler.h" />
+    <ClInclude Include="PersistenceHandler.h" />
     <ClInclude Include="ProcessInfo.h" />
     <ClInclude Include="RecoveredPassword.h" />
     <ClInclude Include="RegistryHandler.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="NativeMethodsHelper.cpp" />
     <ClCompile Include="PasswordRecoveryHandler.cpp" />
+    <ClCompile Include="PersistenceHandler.cpp" />
     <ClCompile Include="RegistryHandler.cpp" />
     <ClCompile Include="RemoteDesktopHandler.cpp" />
     <ClCompile Include="RemoteShellHandler.cpp" />

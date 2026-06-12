@@ -1,43 +1,145 @@
 ﻿<UserControl x:Class="rslm_frontend.Views.BuilderTerminalView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="{DynamicResource VsBackgroundBrush}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+             Background="#1E1E1E">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
 
-        <ToolBar Grid.Row="0" Background="{DynamicResource VsPanelBrush}" Padding="8,4">
-            <Label Content="IP Serveur:" Foreground="{DynamicResource VsTextBrush}" Margin="4,0"/>
-            <TextBox x:Name="ServerIpBox" Text="127.0.0.1" Width="120" Margin="0,0,8,0"/>
-            <Label Content="Port:" Foreground="{DynamicResource VsTextBrush}" Margin="4,0"/>
-            <TextBox x:Name="ServerPortBox" Text="4782" Width="60" Margin="0,0,8,0"/>
-            <Separator Style="{DynamicResource VsToolBarSeparatorStyle}"/>
-            <Button x:Name="GenerateAgentBtn" Click="GenerateAgent_Click" Content="🚀 Générer Agent" Margin="4" Padding="8,4"/>
-            <Button x:Name="GenerateStubBtn" Click="GenerateStub_Click" Content="📦 Générer Stub" Margin="4" Padding="8,4"/>
-            <Button x:Name="ClearTerminalBtn" Click="ClearTerminal_Click" Content="🗑 Clear" Margin="4" Padding="8,4"/>
-        </ToolBar>
+		<!-- Toolbar style dnSpy / IDA Pro -->
+		<Border Grid.Row="0" Background="#2D2D30" BorderBrush="#3F3F46" BorderThickness="0,0,0,1">
+			<Grid Margin="12,6">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
 
-        <Border Grid.Row="1" BorderBrush="{DynamicResource VsBorderBrush}" BorderThickness="1" Background="{DynamicResource VsBackgroundBrush}">
-            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
-                <TextBox x:Name="TerminalBox" 
-                         IsReadOnly="True"
-                         Background="{DynamicResource VsBackgroundBrush}"
-                         Foreground="{DynamicResource VsTextBrush}"
-                         FontFamily="Consolas"
-                         FontSize="11"
-                         TextWrapping="Wrap"
-                         AcceptsReturn="True"
-                         VerticalScrollBarVisibility="Visible"/>
-            </ScrollViewer>
-        </Border>
+				<!-- Section IP / Port -->
+				<StackPanel Grid.Column="0" Orientation="Horizontal">
+					<Border Background="#3E3E42" CornerRadius="3" Padding="6,3" Margin="0,0,8,0">
+						<TextBlock Text="▶" Foreground="#569CD6" FontFamily="Segoe UI" FontSize="11" FontWeight="Bold"/>
+					</Border>
+					<TextBlock Text="Target" Foreground="#9CDCFE" FontFamily="Consolas" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0"/>
+					<TextBox x:Name="ServerIpBox" Text="127.0.0.1" Width="110" Background="#1E1E1E" Foreground="#D4D4D4"
+                             BorderBrush="#3F3F46" BorderThickness="1" FontFamily="Consolas" FontSize="11"
+                             Padding="6,3" Margin="0,0,12,0"/>
+					<TextBlock Text=":" Foreground="#808080" FontFamily="Consolas" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0"/>
+					<TextBox x:Name="ServerPortBox" Text="4782" Width="60" Background="#1E1E1E" Foreground="#D4D4D4"
+                             BorderBrush="#3F3F46" BorderThickness="1" FontFamily="Consolas" FontSize="11"
+                             Padding="6,3" Margin="0,0,12,0"/>
+				</StackPanel>
 
-        <StatusBar Grid.Row="2" Background="{DynamicResource VsPanelBrush}">
-            <StatusBarItem>
-                <TextBlock x:Name="StatusText" Foreground="{DynamicResource VsSecondaryTextBrush}" Text="Ready"/>
-            </StatusBarItem>
-        </StatusBar>
-    </Grid>
+				<!-- Boutons centrés -->
+				<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+					<!-- CheckBox Persistance -->
+					<CheckBox x:Name="PersistenceCheckBox" Content="Persistance"
+                              Foreground="#D4D4D4" FontFamily="Consolas" FontSize="11"
+                              Margin="12,0,12,0" VerticalAlignment="Center"/>
+
+					<Button x:Name="GenerateAgentBtn" Click="GenerateAgent_Click"
+                            Background="#0E5A2E" Foreground="#FFFFFF" BorderBrush="#1E7A3E" BorderThickness="1"
+                            FontFamily="Consolas" FontSize="11" Padding="14,6" Margin="4,0" Cursor="Hand">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="&#xE7E8;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0,0,8,0"/>
+							<TextBlock Text="Build Agent"/>
+						</StackPanel>
+					</Button>
+
+					<Button x:Name="GenerateStubBtn" Click="GenerateStub_Click"
+                            Background="#0E5A2E" Foreground="#FFFFFF" BorderBrush="#1E7A3E" BorderThickness="1"
+                            FontFamily="Consolas" FontSize="11" Padding="14,6" Margin="4,0" Cursor="Hand">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="&#xE7C1;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0,0,8,0"/>
+							<TextBlock Text="Build Stub"/>
+						</StackPanel>
+					</Button>
+
+					<Button x:Name="ClearTerminalBtn" Click="ClearTerminal_Click"
+                            Background="#3E3E42" Foreground="#D4D4D4" BorderBrush="#5A5A5E" BorderThickness="1"
+                            FontFamily="Consolas" FontSize="11" Padding="14,6" Margin="4,0" Cursor="Hand">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="0,0,8,0"/>
+							<TextBlock Text="Clear"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
+
+				<!-- Status info -->
+				<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+					<Border Background="#3E3E42" CornerRadius="3" Padding="6,3">
+						<TextBlock Text="●" Foreground="#4EC9B0" FontSize="10" FontFamily="Segoe UI"/>
+					</Border>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<!-- Terminal style IDA Pro -->
+		<Border Grid.Row="1" Background="#0D0D0D" BorderBrush="#2D2D30" BorderThickness="1,0,1,1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Line numbers -->
+				<Border Grid.Column="0" Background="#1A1A1A" BorderBrush="#2D2D30" BorderThickness="0,0,1,0" Width="50">
+					<TextBlock x:Name="LineNumbers" Text="1" Foreground="#808080" FontFamily="Consolas" FontSize="11"
+                               Padding="8,8,0,8" VerticalAlignment="Top"/>
+				</Border>
+
+				<!-- Terminal content -->
+				<ScrollViewer Grid.Column="1" x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" Background="#0D0D0D">
+					<TextBox x:Name="TerminalBox"
+                             IsReadOnly="True"
+                             Background="#0D0D0D"
+                             Foreground="#D4D4D4"
+                             FontFamily="Consolas"
+                             FontSize="11"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Visible"
+                             BorderThickness="0"
+                             Padding="8,8">
+						<TextBox.Style>
+							<Style TargetType="TextBox">
+								<Setter Property="CaretBrush" Value="#569CD6"/>
+							</Style>
+						</TextBox.Style>
+					</TextBox>
+				</ScrollViewer>
+			</Grid>
+		</Border>
+
+		<!-- Status bar -->
+		<Border Grid.Row="2" Background="#2D2D30" BorderBrush="#3F3F46" BorderThickness="0,1,0,0">
+			<Grid Margin="12,4">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Column="0" Orientation="Horizontal">
+					<Border Background="#3E3E42" CornerRadius="2" Padding="4,2" Margin="0,0,8,0">
+						<TextBlock Text="READY" Foreground="#4EC9B0" FontFamily="Consolas" FontSize="10" FontWeight="Bold"/>
+					</Border>
+					<TextBlock x:Name="StatusText" Foreground="#9CDCFE" FontFamily="Consolas" FontSize="10" Text="Idle"/>
+				</StackPanel>
+
+				<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+					<TextBlock Text="Ada Builder" Foreground="#808080" FontFamily="Consolas" FontSize="10"/>
+					<TextBlock Text=" v2.0" Foreground="#569CD6" FontFamily="Consolas" FontSize="10"/>
+				</StackPanel>
+
+				<StackPanel Grid.Column="2" Orientation="Horizontal">
+					<TextBlock Text="●" Foreground="#4EC9B0" FontFamily="Segoe UI" FontSize="10" Margin="0,0,8,0"/>
+					<TextBlock Text="System Ready" Foreground="#808080" FontFamily="Consolas" FontSize="10"/>
+				</StackPanel>
+			</Grid>
+		</Border>
+	</Grid>
 </UserControl>

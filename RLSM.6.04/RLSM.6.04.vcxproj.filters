@@ -292,6 +292,7 @@
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Strings.h" />
+    <ClInclude Include="PersistenceHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -450,5 +451,6 @@
     </ClCompile>
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="PersistenceHandler.cpp" />
   </ItemGroup>
 </Project>
